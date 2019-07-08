@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import json
-import datetime
 from gino import Gino
 from tornado.web import RequestHandler, MissingArgumentError
 CREDENTIALS_FILE = "credentials.json"
@@ -21,7 +20,7 @@ class Infrabel(db.Model):
     delay_arrival = db.Column(db.Integer())
     stop = db.Column(db.String())
 
-class Statistics:
+class Predict:
     async def connect_db(self):
         try:
             credentials = None
@@ -42,6 +41,9 @@ class Statistics:
         await db.gino.create_all()
 
     async def group_entries(self, station, vehicle_type, time_from, time_until):
+        # Open connection
+        await self.connect_db()
+
         results = await Infrabel.query\
                 .where(Infrabel.stop == station)\
                 .where(time_from < Infrabel.planned_departure)\
@@ -50,35 +52,5 @@ class Statistics:
                 .gino.all()
         print(results)
 
-
-    async def convert(self):
-        # Open connection
-        await self.connect_db()
-
-        # Create something
-        create = await Infrabel.create(vehicle_uri="http://example.com/IC123",
-                                       vehicle_departure_station="http://example2.com",
-                                       vehicle_arrival_station="http://example1.com",
-                                       planned_departure=datetime.datetime.now(),
-                                       planned_arrival=datetime.datetime.now(),
-                                       delay_departure=1,
-                                       delay_arrival=6,
-                                       stop="http://example5.com")
-        create = await Infrabel.create(vehicle_uri="http://example.com/L123",
-                                       vehicle_departure_station="http://example2.com",
-                                       vehicle_arrival_station="http://example1.com",
-                                       planned_departure=datetime.datetime.now(),
-                                       planned_arrival=datetime.datetime.now(),
-                                       delay_departure=1,
-                                       delay_arrival=6,
-                                       stop="http://example5.com")
-
-        station = "http://example5.com"
-        vehicle_type = "IC"
-        time_from = datetime.datetime.now() - datetime.timedelta(seconds=1)
-        time_until = datetime.datetime.now()
-        await self.group_entries(station, vehicle_type, time_from, time_until)
-
-        # Properly close connection
+        # Close connection
         await db.pop_bind().close()
-
