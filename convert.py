@@ -46,6 +46,7 @@ class ConvertHandler(RequestHandler):
                 .where(Infrabel.stop == station)\
                 .where(time_from < Infrabel.planned_departure)\
                 .where(Infrabel.planned_departure < time_until)\
+                .where(Infrabel.vehicle_uri.contains(vehicle_type))\
                 .gino.all()
         print(results)
 
@@ -56,6 +57,14 @@ class ConvertHandler(RequestHandler):
 
         # Create something
         create = await Infrabel.create(vehicle_uri="http://example.com/IC123",
+                                       vehicle_departure_station="http://example2.com",
+                                       vehicle_arrival_station="http://example1.com",
+                                       planned_departure=datetime.datetime.now(),
+                                       planned_arrival=datetime.datetime.now(),
+                                       delay_departure=1,
+                                       delay_arrival=6,
+                                       stop="http://example5.com")
+        create = await Infrabel.create(vehicle_uri="http://example.com/L123",
                                        vehicle_departure_station="http://example2.com",
                                        vehicle_arrival_station="http://example1.com",
                                        planned_departure=datetime.datetime.now(),
