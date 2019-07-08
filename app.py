@@ -8,6 +8,6 @@ if __name__ == "__main__":
     urls = [("/", RootHandler),
     ("/connections", ConnectionsHandler)]
 
-    app = Application(urls, debug=True)
+    app = Application(urls)
     app.listen(3000)
     IOLoop.instance().start()
