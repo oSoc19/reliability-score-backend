@@ -7,6 +7,7 @@ from connections import ConnectionsHandler
 if __name__ == "__main__":
     urls = [("/", RootHandler),
     ("/connections", ConnectionsHandler)]
+
     app = Application(urls, debug=True)
     app.listen(3000)
     IOLoop.instance().start()
