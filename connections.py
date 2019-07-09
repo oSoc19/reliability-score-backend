@@ -70,3 +70,6 @@ class ConnectionsHandler(RequestHandler):
             return None
         else:
             return response
+
+        # Free resources again
+        httpclient.close()
