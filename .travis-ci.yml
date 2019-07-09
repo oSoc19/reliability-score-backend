@@ -1,0 +1,12 @@
+language: python
+python:
+  - "3.6"
+  - "3.7"
+before_install:
+  - sudo apt install -y wget
+install:
+  - pip install pipenv
+  - pipenv install
+script:
+  - pipenv run python app.py &
+  - wget http://localhost:3000/connections?from=Vilvoorde&to=Brugge&time=2038&date=080719&timesel=departure 
