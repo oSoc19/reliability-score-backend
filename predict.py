@@ -2,6 +2,7 @@
 import json
 from gino import Gino
 from tornado.web import RequestHandler, MissingArgumentError
+from secret import USER, PASSWORD, IP, PORT
 CREDENTIALS_FILE = "credentials.json"
 POSTGRES_URI = "postgresql://{}:{}@{}:{}/rdb"
 
@@ -33,10 +34,10 @@ class Predict:
         except:
             raise Exception("No credentials available for the database")
 
-        await db.set_bind(POSTGRES_URI.format(credentials["user"],
-                                              credentials["password"],
-                                              credentials["ip"],
-                                              credentials["port"]))
+        await db.set_bind(POSTGRES_URI.format(USER,
+                                              PASSWORD,
+                                              IP,
+                                              PORT))
         # Create tables
         await db.gino.create_all()
 
