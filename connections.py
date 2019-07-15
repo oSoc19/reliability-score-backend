@@ -27,24 +27,30 @@ class ConnectionsHandler(RequestHandler):
         # Perform iRail API query
         response = await self._get_routes(departure_station, arrival_station, time, date, timesel)
         if "connection" in response:
-            # Add random reliability data to response
+            # Add reliability data to response
             # NOTE: delay info is an integer, rest of iRail API uses strings
             for connection in response["connection"]:
-                connection["arrival"]["delayPrediction"] = randint(-100, 200)
-                connection["arrival"]["delayChance"] = randint(0, 100)
-                connection["departure"]["delayPrediction"] = randint(-100, 200)
-                connection["departure"]["delayChance"] = randint(0, 100)
+                arrival_station = connection["arrival"]["stationinfo"]["@id"]
+                departure_station = connection["departure"]["stationinfo"]["@id"]
+                connection["reliabilityScore"] = await self._get_score(arrival_station)
+                connection["arrival"]["reliability"] = await self._get_reliability(arrival_station)
+                connection["departure"]["reliability"] = await self._get_reliability(departure_station)
+
                 for via in connection["vias"]["via"]:
-                    via["arrival"]["delayPrediction"] = randint(-100, 200)
-                    via["arrival"]["delayChance"] = randint(0, 100)
-                    via["departure"]["delayPrediction"] = randint(-100, 200)
-                    via["departure"]["delayChance"] = randint(0, 100)
+                    via_station = via["stationinfo"]["@id"]
+                    via["reliability"] = await self._get_reliability(via_station)
 
             # Return response
             self.write(response)
         else:
             raise HTTPError(status_code=HTTP_INTERNAL_SERVER_ERROR,
                             log_message="Missing required arguments for the iRail /connections API")
+
+    async def _get_reliability(self, station_uri):
+        return randint(0, 100)
+
+    async def _get_score(self, station_uri):
+        return randint(1, 3)
 
     async def _get_routes(self, departure_station, arrival_station, time, date, timesel):
         """
