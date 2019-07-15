@@ -22,7 +22,7 @@ if __name__ == "__main__":
     app = Application(urls, debug=True)
     
     # Perform prediction calculations before starting the server
-    IOLoop.instance().run_sync(main)
+    #IOLoop.instance().run_sync(main)
 
     # Start the server
     app.listen(os.getenv("PORT", 3000))
