@@ -3,22 +3,22 @@ import pandas as pd
 import numpy as np
 import json
 import re
+from datetime import datetime
 from catboost import CatBoostRegressor, Pool
 from tornado.httpclient import AsyncHTTPClient
 from tornado.escape import json_decode
-VEHICLE_URL = "http://api.irail.be/vehicle/?id={}&date={}&format=json&lang=nl"
+VEHICLE_API_URL = "http://api.irail.be/vehicle/?id={}&date={}&format=json&lang=nl"
 
 class Classifier:
     def __init__(self):
         self._cat = CatBoostRegressor()
-        self._model = None
-        self._features = None
         self._station_uri_mapping = None
         self._stations = pd.read_csv("data/stations.csv")
 
-        with open("data/station_uri.json") as f:
+        with open("data/station_to_uri_irail.json") as f:
             self._station_uri_mapping = json.load(f)
-        self._cat.load_model("data/test_model.cbm")
+        self._cat.load_model("data/model.cbm")
+        print("Model loaded")
 
     async def predict(self, vehicle_id, timestamp):
         """
@@ -31,6 +31,7 @@ class Classifier:
         vehicle_type = pattern.match(vehicle_id).group(1)
         line_id = pattern.match(vehicle_id).group(2)
         vehicle_nr, line = self._get_line_number(vehicle_id)
+        train_type = vehicle_id
 
         # Get vehicle information
         response = await self._get_vehicle(vehicle_id, timestamp)
@@ -43,7 +44,7 @@ class Classifier:
         delays = []
         for stop in response["stops"]["stop"]:
             try:
-                station_cur_uri = station_to_uri(stop["station"])
+                station_cur_uri = self._get_station_uri(stop["station"])
                 station_cur = station_cur_uri.split("/")[-1]
                 date = datetime.utcfromtimestamp(int(stop["time"]))
                 departure_time  = datetime.utcfromtimestamp(int(stop["scheduledDepartureTime"]))
@@ -59,31 +60,28 @@ class Classifier:
                 station_lat = station_info["latitude"]
                 station_stop = station_info["avg_stop_times"]
 
+                # Run interference
                 vector = [station_cur, str(dotw), weekend, month, seconds_since_midnight, expected_time_station, station_lng, station_lat, station_stop, train_type, line_id, stop_arr, stop_dep, line]
-
-                before = time.time()
-                delay = cat.predict([vector])[0]
-                after = time.time()
-                print(f"Prediction: {after-before} sec.")
+                delay = self._cat.predict([vector])[0]
 
                 delays.append((stop["station"], stop["time"], delay))
             except Exception as e:
-                raise e
+                print("Error: %s" % e)
                 delays.append((stop["station"], stop["time"], np.NaN))
         return delays
 
-    def _get_seconds_since_midnight(timestamp):
+    def _get_seconds_since_midnight(self, timestamp):
         midnight = timestamp.replace(hour=0, minute=0, second=0, microsecond=0)
         return (midnight - timestamp).total_seconds()
 
     def _get_station_uri(self, station):
-        return self._station_uri_mapping.get(station, default=None)
+        return self._station_uri_mapping.get(station, None)
 
     def _get_line_number(self, vehicle_id):
         # Expected input: "IC1515"
         pattern = re.compile("^([A-Z]+)([0-9])+$")
-        vehicle_type = pattern.match(vehicle).group(1)
-        vehicle_nr = int(pattern.match(vehicle).group(2))
+        vehicle_type = pattern.match(vehicle_id).group(1)
+        vehicle_nr = int(pattern.match(vehicle_id).group(2))
 
         line_nr = 0
         if vehicle_type == "IC":

@@ -10,8 +10,8 @@ from classifier import Classifier
 
 async def main():
     print("Running main before starting server...")
-    c = Classifier
-    await c.predict("IC123", datetime.datetime.now())
+    c = Classifier()
+    print(await c.predict("IC527", datetime.datetime.now()))
 
 if __name__ == "__main__":
     urls = [("/", RootHandler),
