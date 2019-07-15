@@ -7,6 +7,7 @@ from datetime import datetime
 from catboost import CatBoostRegressor, Pool
 from tornado.httpclient import AsyncHTTPClient
 from tornado.escape import json_decode
+from tornado.ioloop import IOLoop
 VEHICLE_API_URL = "http://api.irail.be/vehicle/?id={}&date={}&format=json&lang=nl"
 
 class Classifier:
@@ -60,9 +61,10 @@ class Classifier:
                 station_lat = station_info["latitude"]
                 station_stop = station_info["avg_stop_times"]
 
-                # Run interference
+                # Run interference async
                 vector = [station_cur, str(dotw), weekend, month, seconds_since_midnight, expected_time_station, station_lng, station_lat, station_stop, train_type, line_id, stop_arr, stop_dep, line]
-                delay = self._cat.predict([vector])[0]
+                delay = await IOLoop.current().run_in_executor(None, self._cat.predict, [vector])
+                delay = delay[0] # Read after await, we want to get the first item of the result, not of a Future object
 
                 delays.append((stop["station"], stop["time"], delay))
             except Exception as e:
