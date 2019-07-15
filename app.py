@@ -6,7 +6,6 @@ from tornado.web import Application, RequestHandler
 from tornado.ioloop import IOLoop
 from root import RootHandler
 from connections import ConnectionsHandler
-from predict import Predict
 
 async def main():
     p = Predict()
