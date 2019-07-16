@@ -3,5 +3,5 @@ from tornado.web import RequestHandler
 
 class RootHandler(RequestHandler):
     def get(self):
-        self.write({"message": "hello world"})
+        self.write({'message': 'hello world'})
 
