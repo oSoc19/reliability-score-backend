@@ -9,6 +9,7 @@ verify_ssl = true
 tornado = "*"
 gino = "*"
 catboost = "*"
+beautifulsoup4 = "*"
 
 [requires]
 python_version = "3.7"
