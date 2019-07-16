@@ -13,6 +13,9 @@ HTTP_BAD_REQUEST = 400
 # demo: http://localhost:3000/connections?from=Vilvoorde&to=Brugge&time=1138&date=080719&timesel=departure
 
 class ConnectionsHandler(RequestHandler):
+    def set_default_headers(self):
+        self.set_header('Access-Control-Allow-Origin', '*')
+
     async def get(self):
         try:
             departure_station = self.get_query_argument("from")
