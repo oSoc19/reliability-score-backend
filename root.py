@@ -6,5 +6,5 @@ class RootHandler(RequestHandler):
         self.set_header('Access-Control-Allow-Origin', '*')
 
     def get(self):
-        self.write({"message": "hello world"})
+        self.write({'message': 'hello world'})
 
