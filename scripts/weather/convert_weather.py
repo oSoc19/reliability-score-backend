@@ -36,13 +36,14 @@ def parse(raw_data):
     return data
 
 def save(data):
-    # AIR_PRESSURE, AIR_TEMPERATURE, RELATIVE_HUMIDITY, WIND_SPEED
+    # TIMESTAMP, AIR_PRESSURE, AIR_TEMPERATURE, RELATIVE_HUMIDITY, WIND_SPEED
     with open('weather-2016-2019.csv', 'w') as f:
         for d in data:
-            f.write('{},{},{},{}\n'.format(data[d]['air_pressure'],
-                                         data[d]['air_temperature'],
-                                         data[d]['relative_humidity'],
-                                         data[d]['wind_speed']))
+            f.write('{},{},{},{},{}\n'.format(d,
+                                              data[d]['air_pressure'],
+                                              data[d]['air_temperature'],
+                                              data[d]['relative_humidity'],
+                                              data[d]['wind_speed']))
 
 if __name__ == '__main__':
     r = requests.get(METEO_DOWNLOAD_URL)
