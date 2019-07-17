@@ -51,12 +51,14 @@ class ConnectionsHandler(RequestHandler):
                 # TODO use better classification, maybe ML?
                 connection['reliabilityScore'] = await self._get_score(reliability)
 
-                for via in connection['vias']['via']:
-                    via_station = via['stationinfo']['@id']
-                    via['reliability'] = await self._get_reliability(
-                                                    via['station'],
-                                                    via['departure']['time'],
-                                                    via['departure']['vehicle'])
+                if 'vias' in connection:
+                    for via in connection['vias']['via']:
+                        via_station = via['stationinfo']['@id']
+                        via['reliability'] = await self._get_reliability(
+                                                        via['station'],
+                                                        via['departure']['time'],
+                                                        via['departure']['vehicle'])
+                # Only return a single route
                 break
 
             # Return response
