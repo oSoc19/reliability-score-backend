@@ -9,7 +9,7 @@ verify_ssl = true
 tornado = "*"
 gino = "*"
 catboost = "*"
-bs4 = "*"
+beautifulsoup4 = "*"
 requests = "*"
 
 [requires]
