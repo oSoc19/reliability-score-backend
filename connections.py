@@ -8,13 +8,13 @@ from classifier import Classifier
 import time as tm
 import json
 import re
+import os.path
 from random import randint
 
 CONNECTIONS_API_URL = 'http://api.irail.be/connections/?from={}&to={}&time={}&date={}&timesel={}&format=json&lang=nl'
 HTTP_INTERNAL_SERVER_ERROR = 500
 HTTP_BAD_REQUEST = 400
-DELAY_6_MIN = 6 * 60
-DELAY_10_MIN = 10 * 60
+SECONDS_TO_MINUTES_DIV = 60
 # demo: http://localhost:3000/connections?from=Vilvoorde&to=Brugge&time=1138&date=080719&timesel=departure
 
 # Only init classifier once!
@@ -40,26 +40,36 @@ class ConnectionsHandler(RequestHandler):
         if 'connection' in response:
             # Add reliability data to response
             # NOTE: delay info is an integer, rest of iRail API uses strings
-            for index, connection in enumerate(response['connection']):
-                arrival_station = connection['arrival']['stationinfo']['@id']
-                departure_station = connection['departure']['stationinfo']['@id']
-                reliability = await self._get_reliability( connection['departure']['station'],
-                                                                connection['departure']['time'],
-                                                                connection['departure']['vehicle'])
-                connection['arrival']['reliability'] = reliability
+            for connection in response["connection"]:
+                arrival_station = connection["arrival"]["stationinfo"]["@id"]
+                departure_station = connection["departure"]["stationinfo"]["@id"]
+                departure_vehicle_id = connection["departure"]["vehicle"].split(".")[-1]
+                arrival_vehicle_id = connection["arrival"]["vehicle"].split(".")[-1]
 
-                # TODO use better classification, maybe ML?
-                connection['reliabilityScore'] = await self._get_score(reliability)
+                if os.path.isfile("data/splitted/results/2018/{}.json".format(departure_vehicle_id)):
+                    with open("data/splitted/results/2018/{}.json".format(departure_vehicle_id)) as f:
+                        departure_data = json.load(f)
+                        station_data = departure_data[departure_station]["departure"]["raw"]
+                        bucket_list = {}
+                        for entry in station_data:
+                            bucket_id = entry//SECONDS_TO_MINUTES_DIV # Put in the right bucket
+                            if not bucket_id in bucket_list:
+                                bucket_list[bucket_id] = 1
+                            else:
+                                bucket_list[bucket_id] += 1
+                        print(bucket_list)
+                        print("-"*50)
 
-                if 'vias' in connection:
-                    for via in connection['vias']['via']:
-                        via_station = via['stationinfo']['@id']
-                        via['reliability'] = await self._get_reliability(
-                                                        via['station'],
-                                                        via['departure']['time'],
-                                                        via['departure']['vehicle'])
-                # Only return a single route
-                break
+                if os.path.isfile("data/splitted/results/2018/{}.json".format(arrival_vehicle_id)):
+                    with open("data/splitted/results/2018/{}.json".format(arrival_vehicle_id)) as f:
+                        arrival_data = json.load(f)
+                        station_data = arrival_data[arrival_station]["arrival"]["raw"]
+
+
+                if "vias" in connection:
+                    for via in connection["vias"]["via"]:
+                        via_station = via["stationinfo"]["@id"]
+                        via["reliability"] = await self._get_reliability(via_station)
 
             # Return response
             response['connection'] = response['connection'][0]
@@ -67,26 +77,6 @@ class ConnectionsHandler(RequestHandler):
         else:
             raise HTTPError(status_code=HTTP_INTERNAL_SERVER_ERROR,
                             log_message='Missing required arguments for the iRail /connections API')
-
-    async def _get_reliability(self, stop_name, stop_time, vehicle_name):
-        vehicle_id = vehicle_name.split('.')[-1]
-        timestamp = datetime.utcfromtimestamp(int(stop_time))
-        delays = await _classifier.predict(vehicle_id, timestamp)
-        for d in delays:
-            print(d, stop_name.split('/')[0])
-            if stop_name.split('/')[0] in d:
-                return d[-1]
-
-        print('Unknown reliability: {}'.format(stop_name))
-        return -1
-
-    async def _get_score(self, reliability):
-        if reliability > DELAY_6_MIN:
-            return 2
-        if reliability > DELAY_10_MIN:
-            return 1
-        else:
-            return 3
 
     async def _get_routes(self, departure_station, arrival_station, time, date, timesel):
         """
@@ -114,5 +104,5 @@ class ConnectionsHandler(RequestHandler):
             return response
 
         # Free resources again
-        httpclient.close()
+        http_client.close()
 
