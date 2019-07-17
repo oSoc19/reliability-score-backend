@@ -2,26 +2,32 @@
 import asyncio
 import datetime
 import os
+from functools import partial
 from tornado.web import Application, RequestHandler
 from tornado.ioloop import IOLoop
 from root import RootHandler
 from connections import ConnectionsHandler
 from classifier import Classifier
+DEFAULT_PORT = 3000
 
 async def main():
-    print("Running main before starting server...")
+    print('Running main before starting server...')
     c = Classifier()
-    print(await c.predict("IC527", datetime.datetime.now()))
+    print(await c.predict('IC527', datetime.datetime.now()))
 
-if __name__ == "__main__":
-    urls = [("/", RootHandler),
-    ("/connections", ConnectionsHandler)]
+if __name__ == '__main__':
+    urls = [('/', RootHandler),
+    ('/connections', ConnectionsHandler)]
 
-    app = Application(urls, debug=True)
+    # Only enable debug mode when the 'DEBUG' environment variable exists
+    debug_mode = False
+    if 'DEBUG' in os.environ:
+        debug_mode = True
+    app = Application(urls, debug=debug_mode)
 
     # Perform prediction calculations before starting the server
     #IOLoop.instance().run_sync(main)
 
     # Start the server
-    app.listen(os.getenv("PORT", 3000))
+    app.listen(os.getenv('PORT', DEFAULT_PORT))
     IOLoop.instance().start()
