@@ -80,12 +80,6 @@ class ConnectionsHandler(RequestHandler):
             raise HTTPError(status_code=HTTP_INTERNAL_SERVER_ERROR,
                             log_message='Missing required arguments for the iRail /connections API')
 
-    async def _get_reliability(self, station_uri):
-        return randint(0, 100)
-
-    async def _get_score(self, station_uri):
-        return randint(1, 3)
-
     async def _get_routes(self, departure_station, arrival_station, time, date, timesel):
         '''
         Performs a request to the iRail /connections API.
