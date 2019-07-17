@@ -9,6 +9,7 @@ verify_ssl = true
 tornado = "*"
 gino = "*"
 catboost = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"
