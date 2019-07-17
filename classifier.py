@@ -144,4 +144,4 @@ class Classifier:
             return response
 
         # Free resources again
-        httpclient.close()
+        http_client.close()
