@@ -12,11 +12,31 @@ CONNECTIONS_API_URL = "http://api.irail.be/connections/?from={}&to={}&time={}&da
 HTTP_INTERNAL_SERVER_ERROR = 500
 HTTP_BAD_REQUEST = 400
 SECONDS_TO_MINUTES_DIV = 60
+MIN_15 = 60 * 15
 # demo: http://localhost:3000/connections?from=Vilvoorde&to=Brugge&time=1138&date=080719&timesel=departure
 
 class ConnectionsHandler(RequestHandler):
     def set_default_headers(self):
         self.set_header('Access-Control-Allow-Origin', '*')
+
+    def get_buckets(self, vehicle_id, data_type, station):
+        bucket_list = {}
+        if os.path.isfile("data/splitted/results/2018/{}.json".format(vehicle_id)):
+            with open("data/splitted/results/2018/{}.json".format(vehicle_id)) as f:
+                departure_data = json.load(f)
+                station_data = departure_data[station][data_type]["raw"]
+                for i in range(0, 17):
+                    bucket_list[i] = 0
+
+                station_data = sorted(station_data)
+                for entry in station_data:
+                    if entry < 0:
+                        bucket_list[0] += 1
+                    elif entry > MIN_15:
+                        bucket_list[16] += 1
+                    else:
+                        bucket_list[entry//SECONDS_TO_MINUTES_DIV] += 1
+        return bucket_list
 
     async def get(self):
         try:
@@ -40,32 +60,17 @@ class ConnectionsHandler(RequestHandler):
                 departure_vehicle_id = connection["departure"]["vehicle"].split(".")[-1]
                 arrival_vehicle_id = connection["arrival"]["vehicle"].split(".")[-1]
 
-                if os.path.isfile("data/splitted/results/2018/{}.json".format(departure_vehicle_id)):
-                    with open("data/splitted/results/2018/{}.json".format(departure_vehicle_id)) as f:
-                        departure_data = json.load(f)
-                        station_data = departure_data[departure_station]["departure"]["raw"]
-                        bucket_list = {}
-                        for entry in station_data:
-                            bucket_id = entry//SECONDS_TO_MINUTES_DIV # Put in the right bucket
-                            if not bucket_id in bucket_list:
-                                bucket_list[bucket_id] = 1
-                            else:
-                                bucket_list[bucket_id] += 1
-                        print(bucket_list)
-                        print("-"*50)
+                connection["departure"]["reliability"] = self.get_buckets(departure_vehicle_id, "departure", departure_station)
+                connection["arrival"]["reliability"] = self.get_buckets(arrival_vehicle_id, "arrival", arrival_station)
 
-                if os.path.isfile("data/splitted/results/2018/{}.json".format(arrival_vehicle_id)):
-                    with open("data/splitted/results/2018/{}.json".format(arrival_vehicle_id)) as f:
-                        arrival_data = json.load(f)
-                        station_data = arrival_data[arrival_station]["arrival"]["raw"]
-
-                #connection["arrival"]["reliability"] = arrival_reliability
-                #connection["departure"]["reliability"] = departure_reliability
-
-                if "vias" in connection:
+                if "vias" in connection and len(connection["vias"]["via"]) > 1:
                     for via in connection["vias"]["via"]:
                         via_station = via["stationinfo"]["@id"]
-                        via["reliability"] = await self._get_reliability(via_station)
+                        departure_vehicle_id = via["departure"]["vehicle"].split(".")[-1]
+                        arrival_vehicle_id = via["arrival"]["vehicle"].split(".")[-1]
+                        via["departure"]["reliability_graph"] = self.get_buckets(departure_vehicle_id, "departure", via_station)
+                        via["arrival"]["reliability_graph"] = self.get_buckets(arrival_vehicle_id, "arrival", via_station)
+
 
             # Return response
             self.write(response)
@@ -105,4 +110,4 @@ class ConnectionsHandler(RequestHandler):
             return response
 
         # Free resources again
-        httpclient.close()
+        http_client.close()
