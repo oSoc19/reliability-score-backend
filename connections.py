@@ -5,11 +5,13 @@ from tornado.escape import json_decode
 
 import json
 import re
+import os.path
 from random import randint
 
 CONNECTIONS_API_URL = "http://api.irail.be/connections/?from={}&to={}&time={}&date={}&timesel={}&format=json"
 HTTP_INTERNAL_SERVER_ERROR = 500
 HTTP_BAD_REQUEST = 400
+SECONDS_TO_MINUTES_DIV = 60
 # demo: http://localhost:3000/connections?from=Vilvoorde&to=Brugge&time=1138&date=080719&timesel=departure
 
 class ConnectionsHandler(RequestHandler):
@@ -35,13 +37,35 @@ class ConnectionsHandler(RequestHandler):
             for connection in response["connection"]:
                 arrival_station = connection["arrival"]["stationinfo"]["@id"]
                 departure_station = connection["departure"]["stationinfo"]["@id"]
-                connection["reliabilityScore"] = await self._get_score(arrival_station)
-                connection["arrival"]["reliability"] = await self._get_reliability(arrival_station)
-                connection["departure"]["reliability"] = await self._get_reliability(departure_station)
+                departure_vehicle_id = connection["departure"]["vehicle"].split(".")[-1]
+                arrival_vehicle_id = connection["arrival"]["vehicle"].split(".")[-1]
 
-                for via in connection["vias"]["via"]:
-                    via_station = via["stationinfo"]["@id"]
-                    via["reliability"] = await self._get_reliability(via_station)
+                if os.path.isfile("data/splitted/results/2018/{}.json".format(departure_vehicle_id)):
+                    with open("data/splitted/results/2018/{}.json".format(departure_vehicle_id)) as f:
+                        departure_data = json.load(f)
+                        station_data = departure_data[departure_station]["departure"]["raw"]
+                        bucket_list = {}
+                        for entry in station_data:
+                            bucket_id = entry//SECONDS_TO_MINUTES_DIV # Put in the right bucket
+                            if not bucket_id in bucket_list:
+                                bucket_list[bucket_id] = 1
+                            else:
+                                bucket_list[bucket_id] += 1
+                        print(bucket_list)
+                        print("-"*50)
+
+                if os.path.isfile("data/splitted/results/2018/{}.json".format(arrival_vehicle_id)):
+                    with open("data/splitted/results/2018/{}.json".format(arrival_vehicle_id)) as f:
+                        arrival_data = json.load(f)
+                        station_data = arrival_data[arrival_station]["arrival"]["raw"]
+
+                #connection["arrival"]["reliability"] = arrival_reliability
+                #connection["departure"]["reliability"] = departure_reliability
+
+                if "vias" in connection:
+                    for via in connection["vias"]["via"]:
+                        via_station = via["stationinfo"]["@id"]
+                        via["reliability"] = await self._get_reliability(via_station)
 
             # Return response
             self.write(response)
