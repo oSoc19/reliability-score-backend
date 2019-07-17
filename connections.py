@@ -11,23 +11,12 @@ import re
 import os.path
 from random import randint
 
-<<<<<<< HEAD
-CONNECTIONS_API_URL = 'http://api.irail.be/connections/?from={}&to={}&time={}&date={}&timesel={}&format=json&lang=nl'
-=======
-
 CONNECTIONS_API_URL = 'http://api.irail.be/connections/?from={}&to={}&time={}&date={}&timesel={}&format=json'
->>>>>>> Formatting (replace double quotes with single quotes)
 HTTP_INTERNAL_SERVER_ERROR = 500
 HTTP_BAD_REQUEST = 400
 SECONDS_TO_MINUTES_DIV = 60
 MIN_15 = 60 * 15
 # demo: http://localhost:3000/connections?from=Vilvoorde&to=Brugge&time=1138&date=080719&timesel=departure
-
-<<<<<<< HEAD
-# Only init classifier once!
-_classifier = Classifier()
-=======
->>>>>>> Formatting (replace double quotes with single quotes)
 
 class ConnectionsHandler(RequestHandler):
     def set_default_headers(self):
@@ -92,15 +81,6 @@ class ConnectionsHandler(RequestHandler):
         else:
             raise HTTPError(status_code=HTTP_INTERNAL_SERVER_ERROR,
                             log_message='Missing required arguments for the iRail /connections API')
-<<<<<<< HEAD
-=======
-
-    async def _get_reliability(self, station_uri):
-        return randint(0, 100)
-
-    async def _get_score(self, station_uri):
-        return randint(1, 3)
->>>>>>> Formatting (replace double quotes with single quotes)
 
     async def _get_routes(self, departure_station, arrival_station, time, date, timesel):
         '''
@@ -129,7 +109,3 @@ class ConnectionsHandler(RequestHandler):
 
         # Free resources again
         http_client.close()
-<<<<<<< HEAD
-
-=======
->>>>>>> Use graph data
