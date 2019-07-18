@@ -17,7 +17,7 @@ HTTP_BAD_REQUEST = 400
 SECONDS_TO_MINUTES_DIV = 60
 MAX_BUCKET = 15
 NEGATIVE_DELAY = 0
-SPLIT_PATH = 'data/splitted/results/2019/{}.json'
+SPLIT_PATH = 'data/splitted/2019/{}.json'
 # demo: http://localhost:3000/connections?from=Vilvoorde&to=Brugge&time=1138&date=080719&timesel=departure
 
 
