@@ -16,7 +16,10 @@ CONNECTIONS_API_URL = 'http://api.irail.be/connections/?from={}&to={}&time={}&da
 HTTP_INTERNAL_SERVER_ERROR = 500
 HTTP_BAD_REQUEST = 400
 SECONDS_TO_MINUTES_DIV = 60
-MIN_15 = 60 * 15
+# MIN_15 = 60 * 15
+MAX_BUCKET = 15
+NEGATIVE_DELAY = 0
+SPLIT_PATH = 'data/splitted/results/2019/{}.json'
 # demo: http://localhost:3000/connections?from=Vilvoorde&to=Brugge&time=1138&date=080719&timesel=departure
 
 
@@ -26,19 +29,19 @@ class ConnectionsHandler(RequestHandler):
 
     def get_buckets(self, vehicle_id, data_type, station):
         bucket_list = {}
-        if os.path.isfile('data/splitted/results/2018/{}.json'.format(vehicle_id)):
-            with open('data/splitted/results/2018/{}.json'.format(vehicle_id)) as f:
+        if os.path.isfile(SPLIT_PATH.format(vehicle_id)):
+            with open(SPLIT_PATH.format(vehicle_id)) as f:
                 departure_data = json.load(f)
                 station_data = departure_data[station][data_type]['raw']
-                for i in range(0, 17):
+                for i in range(0, MAX_BUCKET+2):  # One extra for negative delays (index 0) and for above 15 (index 16)
                     bucket_list[i] = 0
 
                 station_data = sorted(station_data)
                 for entry in station_data:
                     if entry < 0:
-                        bucket_list[0] += 1
-                    elif entry > MIN_15:
-                        bucket_list[16] += 1
+                        bucket_list[NEGATIVE_DELAY] += 1
+                    elif entry > MAX_BUCKET*60:
+                        bucket_list[MAX_BUCKET+1] += 1
                     else:
                         bucket_list[entry//SECONDS_TO_MINUTES_DIV+1] += 1
         return bucket_list
@@ -78,7 +81,7 @@ class ConnectionsHandler(RequestHandler):
 
 
             # Return response
-            response['connection'] = response['connection'][0]
+            response['connection'] = response['connection']
             self.write(response)
         else:
             raise HTTPError(status_code=HTTP_INTERNAL_SERVER_ERROR,
