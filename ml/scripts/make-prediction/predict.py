@@ -12,16 +12,13 @@ y_min = -984.0000000000001
 
 before = time.time()
 cat = CatBoostRegressor()
-cat.load_model('test_model.cbm')
+cat.load_model('../../data/models/model_1million.cbm')
 after = time.time()
 print(f'Loading model: {after-before} sec.')
 
-
-stations_df = pd.read_csv('../data/stations.csv')
-station_uris = json.load(open('../data/station_uris_irail.json', 'r'))
-encoders = pickle.load(open('encoders.pickle', 'rb'))
-
-
+stations_df = pd.read_csv('../../data/stations.csv')
+station_uris = json.load(open('../../data/station_uris_irail.json', 'r'))
+encoders = pickle.load(open('../../data/models/1m_encoders.pickle', 'rb'))
 
 
 def station_to_uri(station):
@@ -32,7 +29,7 @@ def station_to_uri(station):
 
 
 def get_seconds_since_midnight(datetime):
-	midnight =  datetime.replace(hour=0, minute=0, second=0, microsecond=0)
+	midnight = datetime.replace(hour=0, minute=0, second=0, microsecond=0)
 	return (datetime - midnight).total_seconds()
 
 
@@ -57,12 +54,12 @@ def encode(feature, value):
 	return encoders[feature].transform([value])
 
 
-
-
 def get_features(vehicle_id, time_str):
 	parsed_time = pd.to_datetime(time_str, format='%d-%m-%Y %H:%M')
 	parsed_time_str = parsed_time.strftime('%d%m%y')
-	VEHICLE_URL = 'http://api.irail.be/vehicle/?id={}&date={}&format=json&lang=nl'.format(vehicle_id, parsed_time_str)
+	VEHICLE_URL = 'http://api.irail.be/vehicle/?id={}&date={}&format=json&lang=nl'.format(
+	    vehicle_id, parsed_time_str
+	)
 
 	line_id = vehicle_id.split('.')[-1]
 	pattern = re.compile("^([A-Z]+)([0-9]+)$")
@@ -85,8 +82,8 @@ def get_features(vehicle_id, time_str):
 			station_cur_uri = station_to_uri(stop['station'])
 			station_cur = station_cur_uri.split('/')[-1]
 			date = datetime.utcfromtimestamp(int(stop['time']))
-			departure_time  = datetime.utcfromtimestamp(int(stop['scheduledDepartureTime']))
-			arrival_time  = datetime.utcfromtimestamp(int(stop['scheduledArrivalTime']))
+			departure_time = datetime.utcfromtimestamp(int(stop['scheduledDepartureTime']))
+			arrival_time = datetime.utcfromtimestamp(int(stop['scheduledArrivalTime']))
 			dotw = date.weekday()
 			weekend = dotw > 4
 			month = date.month
@@ -98,13 +95,18 @@ def get_features(vehicle_id, time_str):
 			station_lat = station_info['latitude']
 			station_stop = station_info['avg_stop_times']
 
-			stuff = [dotw, station_cur, line_id, train_type, station_arr, station_dep, line]
+			encoded_data = [dotw, station_cur, line_id, train_type, station_arr, station_dep, line]
 			encoded_features = ['dotw', 'station_cur', 'line_id', 'train_type', 'station_arr', 'station_dep', 'line']
 			encoded = {}
-			for value, feature in zip(stuff, encoded_features):
+			for value, feature in zip(encoded_data, encoded_features):
 				encoded[feature] = encoders[feature].transform([value])
 
-			vector = [encoded['station_cur'], encoded['station_dep'], encoded['station_arr'], encoded['dotw'], weekend, month, seconds_since_midnight, expected_time_station, station_lng, station_lat, station_stop, encoded['train_type'], encoded['line_id'],stop_arr, stop_dep, encoded['line']]
+			vector = [
+			    encoded['station_cur'], encoded['station_dep'], encoded['station_arr'],
+			    encoded['dotw'], weekend, month, seconds_since_midnight, expected_time_station,
+			    station_lng, station_lat, station_stop, encoded['train_type'], encoded['line_id'],
+			    stop_arr, stop_dep, encoded['line']
+			]
 
 			before = time.time()
 			delay = cat.predict([vector])[0]
@@ -141,4 +143,4 @@ print(get_features('BE.NMBS.IC1517', '11-07-2019 15:17'))
 print(get_features('BE.NMBS.IC1517', '11-07-2019 15:18'))
 print(get_features('BE.NMBS.IC1517', '11-07-2019 15:19'))
 end = time.time()
-print(end-start)
+print(end - start)
