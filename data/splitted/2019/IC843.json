@@ -1,0 +1,188 @@
+{
+    "http://irail.be/stations/NMBS/008896008": {
+        "departure": {
+            "median": 1479.5,
+            "mean": 1479.5,
+            "variance": 5304.5,
+            "min": 1428,
+            "max": 1531,
+            "raw": [
+                1428,
+                1531
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": []
+        }
+    },
+    "http://irail.be/stations/NMBS/008896925": {
+        "departure": {
+            "median": 1518.0,
+            "mean": 1518,
+            "variance": 18432,
+            "min": 1422,
+            "max": 1614,
+            "raw": [
+                1422,
+                1614
+            ]
+        },
+        "arrival": {
+            "median": 1496.5,
+            "mean": 1496.5,
+            "variance": 16744.5,
+            "min": 1405,
+            "max": 1588,
+            "raw": [
+                1405,
+                1588
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008896909": {
+        "departure": {
+            "median": 1503.5,
+            "mean": 1503.5,
+            "variance": 17484.5,
+            "min": 1410,
+            "max": 1597,
+            "raw": [
+                1410,
+                1597
+            ]
+        },
+        "arrival": {
+            "median": 1503.5,
+            "mean": 1503.5,
+            "variance": 17484.5,
+            "min": 1410,
+            "max": 1597,
+            "raw": [
+                1410,
+                1597
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008896800": {
+        "departure": {
+            "median": 1390.5,
+            "mean": 1390.5,
+            "variance": 21012.5,
+            "min": 1288,
+            "max": 1493,
+            "raw": [
+                1288,
+                1493
+            ]
+        },
+        "arrival": {
+            "median": 1395.0,
+            "mean": 1395,
+            "variance": 17672,
+            "min": 1301,
+            "max": 1489,
+            "raw": [
+                1301,
+                1489
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008892205": {
+        "departure": {
+            "median": 1357.5,
+            "mean": 1357.5,
+            "variance": 22260.5,
+            "min": 1252,
+            "max": 1463,
+            "raw": [
+                1252,
+                1463
+            ]
+        },
+        "arrival": {
+            "median": 1352.0,
+            "mean": 1352,
+            "variance": 20000,
+            "min": 1252,
+            "max": 1452,
+            "raw": [
+                1252,
+                1452
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008891314": {
+        "departure": {
+            "median": 1298.5,
+            "mean": 1298.5,
+            "variance": 23112.5,
+            "min": 1191,
+            "max": 1406,
+            "raw": [
+                1191,
+                1406
+            ]
+        },
+        "arrival": {
+            "median": 1338.5,
+            "mean": 1338.5,
+            "variance": 20200.5,
+            "min": 1238,
+            "max": 1439,
+            "raw": [
+                1238,
+                1439
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008891264": {
+        "departure": {
+            "median": 1256.0,
+            "mean": 1256,
+            "variance": 23328,
+            "min": 1148,
+            "max": 1364,
+            "raw": [
+                1148,
+                1364
+            ]
+        },
+        "arrival": {
+            "median": 1256.0,
+            "mean": 1256,
+            "variance": 23328,
+            "min": 1148,
+            "max": 1364,
+            "raw": [
+                1148,
+                1364
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008891009": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": []
+        },
+        "arrival": {
+            "median": 1170.0,
+            "mean": 1170,
+            "variance": 20808,
+            "min": 1068,
+            "max": 1272,
+            "raw": [
+                1068,
+                1272
+            ]
+        }
+    }
+}

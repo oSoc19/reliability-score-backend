@@ -1,0 +1,696 @@
+{
+    "http://irail.be/stations/NMBS/008866605": {
+        "departure": {
+            "median": 27.0,
+            "mean": 42.031007751937985,
+            "variance": 3325.2519530660875,
+            "min": 2,
+            "max": 570,
+            "raw": [
+                22,
+                21,
+                19,
+                15,
+                18,
+                11,
+                28,
+                10,
+                75,
+                42,
+                7,
+                77,
+                12,
+                43,
+                570,
+                88,
+                9,
+                53,
+                33,
+                183,
+                29,
+                17,
+                8,
+                21,
+                25,
+                96,
+                14,
+                18,
+                33,
+                24,
+                22,
+                15,
+                77,
+                10,
+                48,
+                39,
+                23,
+                12,
+                19,
+                13,
+                13,
+                15,
+                18,
+                17,
+                30,
+                41,
+                18,
+                56,
+                11,
+                11,
+                13,
+                23,
+                49,
+                9,
+                15,
+                43,
+                24,
+                26,
+                16,
+                13,
+                16,
+                20,
+                29,
+                36,
+                23,
+                15,
+                15,
+                29,
+                16,
+                18,
+                28,
+                55,
+                38,
+                76,
+                32,
+                15,
+                34,
+                53,
+                9,
+                37,
+                4,
+                21,
+                29,
+                234,
+                15,
+                17,
+                86,
+                257,
+                19,
+                15,
+                14,
+                167,
+                11,
+                19,
+                23,
+                20,
+                32,
+                22,
+                22,
+                185,
+                339,
+                19,
+                27,
+                45,
+                11,
+                23,
+                35,
+                7,
+                141,
+                19,
+                23,
+                49,
+                29,
+                22,
+                32,
+                11,
+                45,
+                70,
+                27,
+                52,
+                21,
+                36,
+                12,
+                23,
+                29,
+                22,
+                11,
+                40,
+                17,
+                28,
+                70,
+                37,
+                56,
+                45,
+                66,
+                48,
+                24,
+                25,
+                6,
+                21,
+                12,
+                17,
+                15,
+                56,
+                66,
+                24,
+                93,
+                31,
+                24,
+                23,
+                22,
+                25,
+                64,
+                60,
+                21,
+                12,
+                38,
+                22,
+                44,
+                25,
+                24,
+                8,
+                29,
+                11,
+                35,
+                10,
+                18,
+                30,
+                21,
+                15,
+                53,
+                14,
+                19,
+                21,
+                16,
+                13,
+                53,
+                38,
+                35,
+                27,
+                27,
+                11,
+                38,
+                66,
+                12,
+                26,
+                22,
+                30,
+                32,
+                13,
+                21,
+                66,
+                15,
+                38,
+                52,
+                18,
+                22,
+                7,
+                16,
+                13,
+                2,
+                14,
+                12,
+                40,
+                8,
+                29,
+                13,
+                54,
+                98,
+                124,
+                27,
+                48,
+                110,
+                324,
+                37,
+                150,
+                73,
+                52,
+                331,
+                178,
+                43,
+                27,
+                59,
+                33,
+                29,
+                30,
+                30,
+                33,
+                31,
+                50,
+                37,
+                34,
+                26,
+                21,
+                89,
+                33,
+                85,
+                23,
+                36,
+                68,
+                37,
+                21,
+                38,
+                23,
+                35,
+                18,
+                31,
+                34,
+                32,
+                28,
+                52,
+                25,
+                34,
+                60,
+                45,
+                48,
+                157,
+                27
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0,
+            "variance": 0,
+            "min": 0,
+            "max": 0,
+            "raw": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008813037": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                430
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                446
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008813003": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                408
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                433
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008813045": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                366
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                373
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008812005": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                281
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                374
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008811916": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                221
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                221
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008811304": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                179
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                192
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008811411": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                169
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                206
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008811429": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                142
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                98
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008811437": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                155
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                125
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008811445": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                118
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                101
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008811460": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                118
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                118
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008811510": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                96
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                106
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008811528": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                39
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                36
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008811536": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                16
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                16
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008811544": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                -40
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                -130
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008811601": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                0
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                35
+            ]
+        }
+    }
+}
