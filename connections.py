@@ -11,15 +11,23 @@ import re
 import os.path
 from random import randint
 
+<<<<<<< HEAD
 CONNECTIONS_API_URL = 'http://api.irail.be/connections/?from={}&to={}&time={}&date={}&timesel={}&format=json&lang=nl'
+=======
+
+CONNECTIONS_API_URL = 'http://api.irail.be/connections/?from={}&to={}&time={}&date={}&timesel={}&format=json'
+>>>>>>> Formatting (replace double quotes with single quotes)
 HTTP_INTERNAL_SERVER_ERROR = 500
 HTTP_BAD_REQUEST = 400
 SECONDS_TO_MINUTES_DIV = 60
 MIN_15 = 60 * 15
 # demo: http://localhost:3000/connections?from=Vilvoorde&to=Brugge&time=1138&date=080719&timesel=departure
 
+<<<<<<< HEAD
 # Only init classifier once!
 _classifier = Classifier()
+=======
+>>>>>>> Formatting (replace double quotes with single quotes)
 
 class ConnectionsHandler(RequestHandler):
     def set_default_headers(self):
@@ -27,10 +35,10 @@ class ConnectionsHandler(RequestHandler):
 
     def get_buckets(self, vehicle_id, data_type, station):
         bucket_list = {}
-        if os.path.isfile("data/splitted/results/2018/{}.json".format(vehicle_id)):
-            with open("data/splitted/results/2018/{}.json".format(vehicle_id)) as f:
+        if os.path.isfile('data/splitted/results/2018/{}.json'.format(vehicle_id)):
+            with open('data/splitted/results/2018/{}.json'.format(vehicle_id)) as f:
                 departure_data = json.load(f)
-                station_data = departure_data[station][data_type]["raw"]
+                station_data = departure_data[station][data_type]['raw']
                 for i in range(0, 17):
                     bucket_list[i] = 0
 
@@ -60,22 +68,22 @@ class ConnectionsHandler(RequestHandler):
         if 'connection' in response:
             # Add reliability data to response
             # NOTE: delay info is an integer, rest of iRail API uses strings
-            for connection in response["connection"]:
-                arrival_station = connection["arrival"]["stationinfo"]["@id"]
-                departure_station = connection["departure"]["stationinfo"]["@id"]
-                departure_vehicle_id = connection["departure"]["vehicle"].split(".")[-1]
-                arrival_vehicle_id = connection["arrival"]["vehicle"].split(".")[-1]
+            for connection in response['connection']:
+                arrival_station = connection['arrival']['stationinfo']['@id']
+                departure_station = connection['departure']['stationinfo']['@id']
+                departure_vehicle_id = connection['departure']['vehicle'].split('.')[-1]
+                arrival_vehicle_id = connection['arrival']['vehicle'].split('.')[-1]
 
-                connection["departure"]["reliability"] = self.get_buckets(departure_vehicle_id, "departure", departure_station)
-                connection["arrival"]["reliability"] = self.get_buckets(arrival_vehicle_id, "arrival", arrival_station)
+                connection['departure']['reliability'] = self.get_buckets(departure_vehicle_id, 'departure', departure_station)
+                connection['arrival']['reliability'] = self.get_buckets(arrival_vehicle_id, 'arrival', arrival_station)
 
-                if "vias" in connection and len(connection["vias"]["via"]) > 1:
-                    for via in connection["vias"]["via"]:
-                        via_station = via["stationinfo"]["@id"]
-                        departure_vehicle_id = via["departure"]["vehicle"].split(".")[-1]
-                        arrival_vehicle_id = via["arrival"]["vehicle"].split(".")[-1]
-                        via["departure"]["reliability_graph"] = self.get_buckets(departure_vehicle_id, "departure", via_station)
-                        via["arrival"]["reliability_graph"] = self.get_buckets(arrival_vehicle_id, "arrival", via_station)
+                if 'vias' in connection and len(connection['vias']['via']) > 1:
+                    for via in connection['vias']['via']:
+                        via_station = via['stationinfo']['@id']
+                        departure_vehicle_id = via['departure']['vehicle'].split('.')[-1]
+                        arrival_vehicle_id = via['arrival']['vehicle'].split('.')[-1]
+                        via['departure']['reliability_graph'] = self.get_buckets(departure_vehicle_id, 'departure', via_station)
+                        via['arrival']['reliability_graph'] = self.get_buckets(arrival_vehicle_id, 'arrival', via_station)
 
 
             # Return response
@@ -84,9 +92,18 @@ class ConnectionsHandler(RequestHandler):
         else:
             raise HTTPError(status_code=HTTP_INTERNAL_SERVER_ERROR,
                             log_message='Missing required arguments for the iRail /connections API')
+<<<<<<< HEAD
+=======
+
+    async def _get_reliability(self, station_uri):
+        return randint(0, 100)
+
+    async def _get_score(self, station_uri):
+        return randint(1, 3)
+>>>>>>> Formatting (replace double quotes with single quotes)
 
     async def _get_routes(self, departure_station, arrival_station, time, date, timesel):
-        """
+        '''
         Performs a request to the iRail /connections API.
         Input:
             - departure_station
@@ -95,7 +112,7 @@ class ConnectionsHandler(RequestHandler):
             - timesel
         Output:
             - JSON response as a Python dict
-        """
+        '''
         http_client = AsyncHTTPClient()
         try:
             response = await http_client.fetch(CONNECTIONS_API_URL.format(departure_station,
