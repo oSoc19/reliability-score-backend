@@ -7,12 +7,10 @@ from tornado.web import Application, RequestHandler
 from tornado.ioloop import IOLoop
 from root import RootHandler
 from connections import ConnectionsHandler
-from classifier import Classifier
 DEFAULT_PORT = 3000
 
 async def main():
     print('Running main before starting server...')
-    c = Classifier()
     print(await c.predict('IC527', datetime.datetime.now()))
 
 if __name__ == '__main__':
