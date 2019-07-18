@@ -38,7 +38,7 @@ class ConnectionsHandler(RequestHandler):
                     elif entry > MIN_15:
                         bucket_list[16] += 1
                     else:
-                        bucket_list[entry//SECONDS_TO_MINUTES_DIV] += 1
+                        bucket_list[entry//SECONDS_TO_MINUTES_DIV+1] += 1
         return bucket_list
 
     async def get(self):
