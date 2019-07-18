@@ -27,7 +27,6 @@ class ConnectionsHandler(RequestHandler):
 
     def get_buckets(self, vehicle_id, data_type, station):
         bucket_list = {}
-        entry_counter = 0
         if os.path.isfile(SPLIT_PATH.format(vehicle_id)):
             with open(SPLIT_PATH.format(vehicle_id)) as f:
                 departure_data = json.load(f)
