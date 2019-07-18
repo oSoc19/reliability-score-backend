@@ -57,7 +57,9 @@ def encode(feature, value):
 def get_features(vehicle_id, time_str):
 	parsed_time = pd.to_datetime(time_str, format='%d-%m-%Y %H:%M')
 	parsed_time_str = parsed_time.strftime('%d%m%y')
-	VEHICLE_URL = 'http://api.irail.be/vehicle/?id={}&date={}&format=json&lang=nl'.format(vehicle_id, parsed_time_str)
+	VEHICLE_URL = 'http://api.irail.be/vehicle/?id={}&date={}&format=json&lang=nl'.format(
+	    vehicle_id, parsed_time_str
+	)
 
 	line_id = vehicle_id.split('.')[-1]
 	pattern = re.compile("^([A-Z]+)([0-9]+)$")
@@ -93,16 +95,17 @@ def get_features(vehicle_id, time_str):
 			station_lat = station_info['latitude']
 			station_stop = station_info['avg_stop_times']
 
-			stuff = [dotw, station_cur, line_id, train_type, station_arr, station_dep, line]
+			encoded_data = [dotw, station_cur, line_id, train_type, station_arr, station_dep, line]
 			encoded_features = ['dotw', 'station_cur', 'line_id', 'train_type', 'station_arr', 'station_dep', 'line']
 			encoded = {}
-			for value, feature in zip(stuff, encoded_features):
+			for value, feature in zip(encoded_data, encoded_features):
 				encoded[feature] = encoders[feature].transform([value])
 
 			vector = [
-			    encoded['station_cur'], encoded['station_dep'], encoded['station_arr'], encoded['dotw'], weekend, month,
-			    seconds_since_midnight, expected_time_station, station_lng, station_lat, station_stop,
-			    encoded['train_type'], encoded['line_id'], stop_arr, stop_dep, encoded['line']
+			    encoded['station_cur'], encoded['station_dep'], encoded['station_arr'],
+			    encoded['dotw'], weekend, month, seconds_since_midnight, expected_time_station,
+			    station_lng, station_lat, station_stop, encoded['train_type'], encoded['line_id'],
+			    stop_arr, stop_dep, encoded['line']
 			]
 
 			before = time.time()
