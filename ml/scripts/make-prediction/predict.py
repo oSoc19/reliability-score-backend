@@ -12,13 +12,13 @@ y_min = -984.0000000000001
 
 before = time.time()
 cat = CatBoostRegressor()
-cat.load_model('test_model.cbm')
+cat.load_model('../../data/models/model_1million.cbm')
 after = time.time()
 print(f'Loading model: {after-before} sec.')
 
 stations_df = pd.read_csv('../../data/stations.csv')
 station_uris = json.load(open('../../data/station_uris_irail.json', 'r'))
-encoders = pickle.load(open('encoders.pickle', 'rb'))
+encoders = pickle.load(open('../../data/models/1m_encoders.pickle', 'rb'))
 
 
 def station_to_uri(station):
