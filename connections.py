@@ -17,6 +17,7 @@ SECONDS_TO_MINUTES_DIV = 60
 MAX_BUCKET = 15
 NEGATIVE_DELAY = 0
 SPLIT_PATH = 'data/splitted/2019/{}.json'
+PRECISION = 1
 # demo: http://localhost:3000/connections?from=Vilvoorde&to=Brugge&time=1138&date=080719&timesel=departure
 
 
@@ -26,6 +27,7 @@ class ConnectionsHandler(RequestHandler):
 
     def get_buckets(self, vehicle_id, data_type, station):
         bucket_list = {}
+        entry_counter = 0
         if os.path.isfile(SPLIT_PATH.format(vehicle_id)):
             with open(SPLIT_PATH.format(vehicle_id)) as f:
                 departure_data = json.load(f)
@@ -41,6 +43,12 @@ class ConnectionsHandler(RequestHandler):
                         bucket_list[MAX_BUCKET + 1] += 1
                     else:
                         bucket_list[entry // SECONDS_TO_MINUTES_DIV + 1] += 1
+
+            # Convert to percentages
+            number_of_entries = sum(bucket_list.values())
+            for b in bucket_list:
+                bucket_list[b] = round(100 * (bucket_list[b] / number_of_entries), PRECISION)
+
         return bucket_list
 
     async def get(self):
