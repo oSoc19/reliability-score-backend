@@ -1,0 +1,84 @@
+{
+    "http://irail.be/stations/NMBS/008821105": {
+        "departure": {
+            "median": 54.5,
+            "mean": 315.1666666666667,
+            "variance": 271794.9666666667,
+            "min": 28,
+            "max": 1346,
+            "raw": [
+                367,
+                46,
+                41,
+                1346,
+                63,
+                28
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": []
+        }
+    },
+    "http://irail.be/stations/NMBS/008821063": {
+        "departure": {
+            "median": 48.5,
+            "mean": 292,
+            "variance": 277593.6,
+            "min": -13,
+            "max": 1336,
+            "raw": [
+                331,
+                59,
+                1,
+                1336,
+                38,
+                -13
+            ]
+        },
+        "arrival": {
+            "median": 48.5,
+            "mean": 292,
+            "variance": 277593.6,
+            "min": -13,
+            "max": 1336,
+            "raw": [
+                331,
+                59,
+                1,
+                1336,
+                38,
+                -13
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008821006": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": []
+        },
+        "arrival": {
+            "median": -14.0,
+            "mean": 223.5,
+            "variance": 275057.9,
+            "min": -75,
+            "max": 1268,
+            "raw": [
+                239,
+                -8,
+                -63,
+                1268,
+                -20,
+                -75
+            ]
+        }
+    }
+}
