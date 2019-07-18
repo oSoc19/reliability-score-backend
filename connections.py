@@ -2,7 +2,10 @@
 from tornado.web import RequestHandler, HTTPError, MissingArgumentError
 from tornado.httpclient import AsyncHTTPClient
 from tornado.escape import json_decode
+from datetime import datetime
+from classifier import Classifier
 
+import time as tm
 import json
 import re
 import os.path
@@ -75,6 +78,7 @@ class ConnectionsHandler(RequestHandler):
 
 
             # Return response
+            response['connection'] = response['connection'][0]
             self.write(response)
         else:
             raise HTTPError(status_code=HTTP_INTERNAL_SERVER_ERROR,
