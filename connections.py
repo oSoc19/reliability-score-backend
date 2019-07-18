@@ -85,7 +85,7 @@ class ConnectionsHandler(RequestHandler):
                             log_message='Missing required arguments for the iRail /connections API')
 
     async def _get_routes(self, departure_station, arrival_station, time, date, timesel):
-        '''
+        """
         Performs a request to the iRail /connections API.
         Input:
             - departure_station
@@ -94,7 +94,7 @@ class ConnectionsHandler(RequestHandler):
             - timesel
         Output:
             - JSON response as a Python dict
-        '''
+        """
         http_client = AsyncHTTPClient()
         try:
             response = await http_client.fetch(CONNECTIONS_API_URL.format(departure_station,

@@ -23,11 +23,11 @@ class Classifier:
         print('Model loaded')
 
     async def predict(self, vehicle_id, timestamp):
-        '''
+        """
         Predict the delays for a given vehicle and timestamp.
         - vehicle_id: The ID of the vehicle, for example: IC123
         - timestamp: A complete datetime timestamp
-        '''
+        """
         # Decode vehicle_nr, line, line_id, vehicle_type
         pattern = re.compile('^([A-Z]+)([0-9]+)$')
         vehicle_type = pattern.match(vehicle_id).group(1)
@@ -121,14 +121,14 @@ class Classifier:
         return vehicle_nr, line_nr
 
     async def _get_vehicle(self, vehicle_id, timestamp):
-        '''
+        """
         Performs a request to the iRail /vehicle API.
         Input:
             - vehicle_id
             - timestamp
         Output:
             - JSON response as a Python dict
-        '''
+        """
         http_client = AsyncHTTPClient()
         try:
             response = await http_client.fetch(
