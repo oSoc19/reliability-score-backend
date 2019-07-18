@@ -11,12 +11,10 @@ import re
 import os.path
 from random import randint
 
-
 CONNECTIONS_API_URL = 'http://api.irail.be/connections/?from={}&to={}&time={}&date={}&timesel={}&format=json'
 HTTP_INTERNAL_SERVER_ERROR = 500
 HTTP_BAD_REQUEST = 400
 SECONDS_TO_MINUTES_DIV = 60
-# MIN_15 = 60 * 15
 MAX_BUCKET = 15
 NEGATIVE_DELAY = 0
 SPLIT_PATH = 'data/splitted/results/2019/{}.json'
