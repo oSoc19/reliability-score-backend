@@ -3,7 +3,6 @@ from tornado.web import RequestHandler, HTTPError, MissingArgumentError
 from tornado.httpclient import AsyncHTTPClient
 from tornado.escape import json_decode
 from datetime import datetime
-from classifier import Classifier
 
 import time as tm
 import json
