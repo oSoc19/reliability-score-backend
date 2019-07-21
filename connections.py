@@ -25,6 +25,16 @@ class ConnectionsHandler(RequestHandler):
     def set_default_headers(self):
         self.set_header('Access-Control-Allow-Origin', '*')
 
+    def get_transfer_time(self, arrival, departure):
+        arr_time = int(arrival['time'])
+        arr_graph = arrival['reliability_graph']
+        dep_time = int(departure['time'])
+        dep_graph = departure['reliability_graph']
+
+        arr_delay = max(arr_graph, key=lambda k: arr_graph[k])
+        dep_delay = max(dep_graph, key=lambda k: dep_graph[k])
+        return (dep_time + dep_delay) - (arr_time + arr_delay)
+
     def get_buckets(self, vehicle_id, data_type, station):
         bucket_list = {}
         if os.path.isfile(SPLIT_PATH.format(vehicle_id)):
@@ -48,7 +58,9 @@ class ConnectionsHandler(RequestHandler):
             for b in bucket_list:
                 bucket_list[b] = round(100 * (bucket_list[b] / number_of_entries), PRECISION)
 
-        return bucket_list
+            return bucket_list
+        else:
+            return None
 
     async def get(self):
         try:
@@ -74,27 +86,40 @@ class ConnectionsHandler(RequestHandler):
                 departure_vehicle_id = connection['departure']['vehicle'].split('.')[-1]
                 arrival_vehicle_id = connection['arrival']['vehicle'].split('.')[-1]
 
-                connection['departure']['reliability'] = self.get_buckets(
+                dep_reliability = self.get_buckets(
                     departure_vehicle_id, 'departure', departure_station
                 )
-                connection['arrival']['reliability'] = self.get_buckets(
+                if dep_reliability is not None:
+                    connection['departure']['reliability'] = dep_reliability
+
+                arr_reliability = self.get_buckets(
                     arrival_vehicle_id, 'arrival', arrival_station
                 )
+                if arr_reliability is not None:
+                    connection['arrival']['reliability'] = arr_reliability
 
                 if 'vias' in connection and len(connection['vias']['via']) > 1:
                     for via in connection['vias']['via']:
                         via_station = via['stationinfo']['@id']
                         departure_vehicle_id = via['departure']['vehicle'].split('.')[-1]
                         arrival_vehicle_id = via['arrival']['vehicle'].split('.')[-1]
-                        via['departure']['reliability_graph'] = self.get_buckets(
+                        dep_reliability = self.get_buckets(
                             departure_vehicle_id, 'departure', via_station
                         )
-                        via['arrival']['reliability_graph'] = self.get_buckets(
+                        if dep_reliability is not None:
+                            via['departure']['reliability_graph'] = dep_reliability
+
+                        arr_reliability = self.get_buckets(
                             arrival_vehicle_id, 'arrival', via_station
                         )
+                        if arr_reliability is not None:
+                            via['arrival']['reliability_graph'] = arr_reliability
+
+                        if arr_reliability is not None and dep_reliability is not None:
+                            transfer_time = self.get_transfer_time(via['arrival'], via['departure'])
+                            via['reliability_transfer_time'] = transfer_time
 
             # Return response
-            response['connection'] = response['connection']
             self.write(response)
         else:
             raise HTTPError(
