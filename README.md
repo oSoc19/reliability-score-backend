@@ -30,8 +30,9 @@ In comparison to the iRail API documentation, all of the arguments are required.
 Besides the iRail API data (see the documentation of the iRail API for more information), we added 2 properties to the response:
 
 - **reliability_graph**: Contains the frequency of the delays for a vehicle at a certain station. The graph contains 16 buckets:
-    - **Bucket 0**: < 1 min. delay (no delay)
-    - **Bucket 1-15**: Bucket number indicates the border, for example bucket 7: all delays between 6 and 7 min.
+    - **Bucket 0**: Negative delays (trains that departed earlier than planned).
+    - **Bucket 1**: On time or a delay < 1 min.
+    - **Bucket 2-15**: Bucket number indicates the border, for example bucket 7: all delays between 6 and 7 min.
     - **Bucket 16**: > 15 min. delay
 - **reliability_transfer_time**: Uses the highest probable delays of a via connection to calculate the time (in seconds) a commuter has to transfer between 2 trains at the via station. It's comparable to the `timeBetween` property of the iRail API, except that we use the statistical information to find out if there's a big chance to miss a transfer.
 
