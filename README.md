@@ -245,7 +245,7 @@ The source code and documentation of these scripts can be found in the `scripts`
 
 ### spreadsheets 
 
-The scripts in `spreadsheets` transforms the Excel files from Infrabel into an open format (CSV).
+The scripts in `spreadsheets` transform the Excel files from Infrabel into an open format (CSV).
 All the Excel files are converted to CSV files by date. The script also generates a single CSV file of the complete data set (`full.csv`)
 
 ### station_uris
