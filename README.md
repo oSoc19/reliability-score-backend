@@ -11,7 +11,7 @@ By performing statistics on the data, we can help commuters to plan their future
 
 
 ## Requirements and installation
-To run the scripts and server in this repository, you need at least Python 3.6 or newer. Go to [Python.org](https://www.python.org/downloads/) to install it for your system. You also need some packages, the best way to do this is with a virtual environment. You can install `pipenv` by running `pip install pipenv` (depending on your Python installation, you may need to run this command with admin/root permissions). You can then install the required packages by running `pipenv install` in this repository and activate the virtual environment with `pipenv shell`. Now you should be able to run all the scripts in this repository.
+To run the scripts and server in this repository, you need at least Python 3.6 or newer. Go to [Python.org](https://www.python.org/downloads/) to install it for your system. You also need some packages, the best way to do this is within a virtual environment. You can install `pipenv` by running `pip install pipenv` (depending on your Python installation, you may need to run this command with admin/root permissions). You can then install the required packages by running `pipenv install` in this repository and activate the virtual environment with `pipenv shell`. Now you should be able to run all the scripts in this repository.
 
 
 ## API
@@ -20,6 +20,8 @@ Our API uses the iRail API ([https://docs.irail.be](https://docs.irail.be/)) to 
 On top of this data, we use pre-generated JSON files which contain statistical information about a vehicle and the stations of its route.
 
 This information is integrated into the API JSON data and used by our frontend application ([https://github.com/oSoc19/reliability-score-frontend](https://github.com/oSoc19/reliability-score-frontend)) to show how reliable your connection is.
+
+To start the API server, activate the virtual environment like mentioned above and run `./app.py`. You can set the PORT environment variable to change the port of the server (default port is 3000).
 
 ### Resources
 
