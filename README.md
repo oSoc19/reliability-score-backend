@@ -1,10 +1,13 @@
 # Reliability Score backend
 
 The backend is running on a Herokuapp Free Dyno at: [https://reliability-score.herokuapp.com/](https://reliability-score.herokuapp.com)
-:warning: When the backend is down (free plan, after 1 hour of inactivity), you need to wait until the Dyno is ready.
-This process doesn't take longer than 20 seconds.
 
-TODO: explain project
+:warning: *When the backend is down (free plan, after 1 hour of inactivity), you need to wait until the Dyno is ready.
+This process doesn't take longer than 20 seconds.*
+
+The backend of Reliability Score project adds reliability information on top of the iRail API.
+We use 4 years of historical delay information from Infrabel to determine the reliability of a train.
+By performing statistics on the data, we can help commuters to plan their future journeys with the train.
 
 ## API
 
@@ -213,18 +216,15 @@ In comparison to the iRail API documentation, all of our arguments are required.
         "name": "unknown"
       }
     }
-      },
-      "occupancy": {
-        "@id": "http://api.irail.be/terms/unknown",
-        "name": "unknown"
-      }
-    },
-    ... // More connections
     ]
 }
 ```
 
+:bulb: *For example purposes, we only show a single route in this example above. In reality, several routes are returned by the backedn.*
+
 ## Machine Learning
+
+TODO
 
 
 ## Scripts
