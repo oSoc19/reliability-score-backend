@@ -229,7 +229,7 @@ Besides the iRail API data (see the documentation of the iRail API for more info
 }
 ```
 
-:bulb: *For example purposes, we only show a single route in this example above. In reality, several routes are returned by the backedn.*
+:bulb: *For example purposes, we only show a single route in this example above. In reality, several routes are returned by the backend.*
 
 ## Machine Learning
 
