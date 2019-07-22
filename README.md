@@ -19,7 +19,7 @@ This information is integrated into the API JSON data and used by our frontend a
 ### Resources
 
 We have a single resource available at `/connections?from={departureStation}&to={arrivalStation}&time={time}&date={date}&timesel={arrival or departure}`.
-In comparison to the iRail API documentation, all of our arguments are required. In case an argument is missing, a `HTTP 400: Bad request` is returned.
+In comparison to the iRail API documentation, all of the arguments are required. In case an argument is missing, a `HTTP 400: Bad request` is returned.
 
 - **from**: The name of the departure station, for example: `Vilvoorde`.
 - **to**: The name of the arrival station, for example: `Brugge`.
