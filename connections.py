@@ -42,10 +42,10 @@ class ConnectionsHandler(RequestHandler):
                 data = json.load(f)
 
                 # In case the station isn't available for the vehicle, return None
-                if station in data:
+                if not station in data:
                     return None
 
-                station_data = departure_data[station][data_type]['raw']
+                station_data = data[station][data_type]['raw']
                 for i in range(0, MAX_BUCKET + 2):  # One extra for negative delays (index 0) and for above 15 (index 16)
                     bucket_list[i] = 0
 
