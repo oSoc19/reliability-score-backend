@@ -239,13 +239,13 @@ TODO
 ## Scripts
 
 In this projects, we use 3 different of scripts.
-These scripts are used to parse and use the raw data from [https://infrabel.be](Infrabel).
+These scripts are used to parse and use the raw data from [https://opendata.infrabel.be/pages/home/](Infrabel Open Data portal).
 The results of the scripts are available in the `data` folder.
 The source code and documentation of these scripts can be found in the `scripts` folder.
 
-### excel_to_csv
+### spreadsheets 
 
-The first script `excel_to_csv` transforms the Excel files from Infrabel into an open format (CSV).
+The scripts in `spreadsheets` transforms the Excel files from Infrabel into an open format (CSV).
 All the Excel files are converted to CSV files by date. The script also generates a single CSV file of the complete data set (`full.csv`)
 
 ### station_uris
