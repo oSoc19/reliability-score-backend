@@ -95,13 +95,13 @@ class ConnectionsHandler(RequestHandler):
                     departure_vehicle_id, 'departure', departure_station
                 )
                 if dep_reliability is not None:
-                    connection['departure']['reliability'] = dep_reliability
+                    connection['departure']['reliability_graph'] = dep_reliability
 
                 arr_reliability = self.get_buckets(
                     arrival_vehicle_id, 'arrival', arrival_station
                 )
                 if arr_reliability is not None:
-                    connection['arrival']['reliability'] = arr_reliability
+                    connection['arrival']['reliability_graph'] = arr_reliability
 
                 if 'vias' in connection and len(connection['vias']['via']) > 1:
                     for via in connection['vias']['via']:
