@@ -26,21 +26,21 @@ This notebook loads the model that was trained and exported by the Jupyter noteb
 The model is made in [catboost](https://catboost.ai/), a machine learning library made by Yandex that uses gradient boosting on decision trees. It's a very fast and easy to use library, mainly because it's great at handling categorical data without having to do one-hot encoding. We trained the model on Google Colab, because it has some very powerful hardware (Xeon and Tesla K80 GPU) for free, which is great for the very resource-heavy training process. To use it, upload the notebook to Google Drive, add a data folder with the iRail `stations.csv` and `station_uris_irai.json` (not the regular Infrabel `station_uris.json`!), open the notebook in Google Colab and run it. It will export the model itself to `model.cbm` and the encoders file to `encoders.pickle`.
 
 ## Features:
-- **STATION_CUR:** URI of the current station
-- *str, categorical* **STATION_DEP:** URI of the departure station
-- *str, categorical* **STATION_ARR:** URI of the arrival station
-- *int, categorical* **dotw:** Day of the week with an index of 0 (so 0 to 6)
-- *bool* **weekend:** Whether the trip is during a weekend or not
-- *int, categorical* **month:** Month of the trip (integer, 1 to 12)
-- *int* **seconds_since_midnight:** Number of seconds since midnight, used to indicate the time of the day
-- *int* **expected_time_station:** Expected time the train stays in the station, according to the Infrabel dataset (departure-arrival)
-- *int* **LNG_CUR:** Longitude of the current station
-- *int* **LAT_CUR:** Latitude of the current station
-- *type* **STOP_CUR:** Expected stop time of the current station according to iRail's `stations.csv`
-- *str, categorical* **train_type:** Train ype ('S', 'IC', 'L', etc.)
-- *str, categorical* **LINE_ID:** ID of the line ('IC1517')
-- *type* **STOP_ARR:** Expected stop time of the arrival station, according to iRail's `stations.csv`
-- *type* **STOP_DEP:** Expected stop time of the departure station, according to iRail's `stations.csv`
-- *str, categorical* **LINE:** URIs of the departure and arrival stations, separated by an underscore ('http://irail.be/stations/NMBS/008891405_http://irail.be/stations/NMBS/008831765')
+- **STATION_CUR** [*str, categorical*]: URI of the current station
+- **STATION_DEP** [*str, categorical*]: URI of the departure station
+- **STATION_ARR** [*str, categorical*]: URI of the arrival station
+- **dotw** [*int, categorical*]: Day of the week with an index of 0 (so 0 to 6)
+- **weekend** [*bool*]: Whether the trip is during a weekend or not
+- **month** [*int, categorical*]: Month of the trip (integer, 1 to 12)
+- **seconds_since_midnight** [*int*]: Number of seconds since midnight, used to indicate the time of the day
+- **expected_time_station** [*int*]: Expected time the train stays in the station, according to the Infrabel dataset (departure-arrival)
+- **LNG_CUR** [*int*]: Longitude of the current station
+- **LAT_CUR** [*int*]: Latitude of the current station
+- **STOP_CUR** [*int*]: Expected stop time of the current station according to iRail's `stations.csv`
+- **train_type** [*str, categorical*]: Train ype ('S', 'IC', 'L', etc.)
+- **LINE_ID** [*str, categorical*]: ID of the line ('IC1517')
+- **STOP_ARR** [*int*]: Expected stop time of the arrival station, according to iRail's `stations.csv`
+- **STOP_DEP** [*int*]: Expected stop time of the departure station, according to iRail's `stations.csv`
+- **LINE** [*str, categorical*]: URIs of the departure and arrival stations, separated by an underscore ('http://irail.be/stations/NMBS/008891405_http://irail.be/stations/NMBS/008831765')
 
 To improve accuracy, this model can be extended with the data about the holidays, school vacations and weather. These data are already available in a readable format (see the documentation on the scripts above), but not yet added to the model.
