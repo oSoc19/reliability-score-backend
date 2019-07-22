@@ -3,7 +3,7 @@
 The backend is running on a Herokuapp Free Dyno at: [https://reliability-score.herokuapp.com/](https://reliability-score.herokuapp.com)
 
 :warning: *When the backend is down (free plan, after 1 hour of inactivity), you need to wait until the Dyno is ready.
-This process doesn't take longer than 20 seconds.*
+This process shouldn't take longer than 20 seconds.*
 
 The backend of Reliability Score project adds reliability information on top of the iRail API.
 We use 4 years of historical delay information from Infrabel to determine the reliability of a train.
@@ -18,7 +18,7 @@ This information is integrated into the API JSON data and used by our frontend a
 
 ### Resources
 
-We have a single resource available at ´/connections?from={departureStation}&to={arrivalStation}&time={time}&date={date}&timesel={arrival or departure}´.
+We have a single resource available at `/connections?from={departureStation}&to={arrivalStation}&time={time}&date={date}&timesel={arrival or departure}`.
 In comparison to the iRail API documentation, all of our arguments are required. In case an argument is missing, a `HTTP 400: Bad request` is returned.
 
 - **from**: The name of the departure station, for example: `Vilvoorde`.
