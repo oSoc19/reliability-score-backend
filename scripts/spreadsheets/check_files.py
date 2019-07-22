@@ -11,6 +11,6 @@ with open('list_spreadsheets.csv', 'r', newline='') as f:
 
 
 for url in urls:
-	filename = re.search('Raw_.*', url).group(0)[:-4] + 'json'
-	if not os.path.exists(f'json/{filename}'):
+	filename = re.search('Raw_.*', url).group(0)[:-4] + 'csv'
+	if not os.path.exists(f'csv/{filename}'):
 		print(filename)
