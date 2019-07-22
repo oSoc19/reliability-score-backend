@@ -9,12 +9,19 @@ The backend of Reliability Score project adds reliability information on top of 
 We use 4 years of historical delay information from Infrabel to determine the reliability of a train.
 By performing statistics on the data, we can help commuters to plan their future journeys with the train.
 
+
+## Requirements and installation
+To run the scripts and server in this repository, you need at least Python 3.6 or newer. Go to [Python.org](https://www.python.org/downloads/) to install it for your system. You also need some packages, the best way to do this is within a virtual environment. You can install `pipenv` by running `pip install pipenv` (depending on your Python installation, you may need to run this command with admin/root permissions). You can then install the required packages by running `pipenv install` in this repository and activate the virtual environment with `pipenv shell`. Now you should be able to run all the scripts in this repository.
+
+
 ## API
 
 Our API uses the iRail API ([https://docs.irail.be](https://docs.irail.be/)) to provide clients the necessary routing information.
 On top of this data, we use pre-generated JSON files which contain statistical information about a vehicle and the stations of its route.
 
 This information is integrated into the API JSON data and used by our frontend application ([https://github.com/oSoc19/reliability-score-frontend](https://github.com/oSoc19/reliability-score-frontend)) to show how reliable your connection is.
+
+To start the API server, activate the virtual environment like mentioned above and run `./app.py`. You can set the PORT environment variable to change the port of the server (default port is 3000).
 
 ### Resources
 
@@ -243,7 +250,7 @@ These scripts are used to parse and use the raw data from [https://opendata.infr
 The results of the scripts are available in the `data` folder.
 The source code and documentation of these scripts can be found in the `scripts` folder.
 
-### spreadsheets 
+### spreadsheets
 
 The scripts in `spreadsheets` transform the Excel files from Infrabel into an open format (CSV).
 All the Excel files are converted to CSV files by date. The script also generates a single CSV file of the complete data set (`full.csv`)
