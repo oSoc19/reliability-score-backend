@@ -37,6 +37,7 @@ class ConnectionsHandler(RequestHandler):
 
     def get_buckets(self, vehicle_id, data_type, station):
         bucket_list = {}
+        print(SPLIT_PATH.format(vehicle_id))
         if os.path.isfile(SPLIT_PATH.format(vehicle_id)):
             with open(SPLIT_PATH.format(vehicle_id)) as f:
                 data = json.load(f)
@@ -63,14 +64,33 @@ class ConnectionsHandler(RequestHandler):
             for b in bucket_list:
                 bucket_list[b] = round(100 * (bucket_list[b] / number_of_entries), PRECISION)
 
+            print(bucket_list)
+
             return bucket_list
         else:
             return None
 
+    def handle_invalid_vehicle_id(self, vehicle_id):
+        # S trains are mapped on L trains in the data
+        # Train number are always the last 4 digits, but we have S51 and S1
+        # trains for example
+        if 'S' in vehicle_id:
+            vehicle_id = 'L' + vehicle_id[-4:]
+
+        # ICT and ICL trains are the same as IC trains
+        if 'IC' in vehicle_id:
+            if os.path.isfile(SPLIT_PATH.format(vehicle_id.replace('IC', 'ICT'))):
+                vehicle_id = vehicle_id.replace('IC', 'ICT')
+
+            if os.path.isfile(SPLIT_PATH.format(vehicle_id.replace('IC', 'ICL'))):
+                vehicle_id = vehicle_id.replace('IC', 'ICL')
+
+        return vehicle_id
+
     async def get(self):
         try:
-            departure_station = self.get_query_argument('from')
-            arrival_station = self.get_query_argument('to')
+            dep_station = self.get_query_argument('from')
+            arr_station = self.get_query_argument('to')
             time = self.get_query_argument('time')
             date = self.get_query_argument('date')
             timesel = self.get_query_argument('timesel')
@@ -81,42 +101,47 @@ class ConnectionsHandler(RequestHandler):
             )
 
         # Perform iRail API query
-        response = await self._get_routes(departure_station, arrival_station, time, date, timesel)
+        response = await self._get_routes(dep_station, arr_station, time, date, timesel)
         if 'connection' in response:
             # Add reliability data to response
             # NOTE: delay info is an integer, rest of iRail API uses strings
             for connection in response['connection']:
-                arrival_station = connection['arrival']['stationinfo']['@id']
-                departure_station = connection['departure']['stationinfo']['@id']
-                departure_vehicle_id = connection['departure']['vehicle'].split('.')[-1]
-                arrival_vehicle_id = connection['arrival']['vehicle'].split('.')[-1]
+                arr_station = connection['arrival']['stationinfo']['@id']
+                dep_station = connection['departure']['stationinfo']['@id']
+                dep_vehicle_id = self.handle_invalid_vehicle_id(connection['departure']['vehicle'].split('.')[-1])
+                arr_vehicle_id = self.handle_invalid_vehicle_id(connection['arrival']['vehicle'].split('.')[-1])
 
-                dep_reliability = self.get_buckets(
-                    departure_vehicle_id, 'departure', departure_station
-                )
+
+                dep_reliability = self.get_buckets(dep_vehicle_id,
+                                                   'departure',
+                                                   dep_station)
+
                 if dep_reliability is not None:
                     connection['departure']['reliability_graph'] = dep_reliability
 
-                arr_reliability = self.get_buckets(
-                    arrival_vehicle_id, 'arrival', arrival_station
-                )
+                if arr_vehicle_id[0] == 'S' and arr_vehicle_id[1].isdigit():
+                    arr_vehicle_id = 'L' + arr_vehicle_id[2:]
+
+                arr_reliability = self.get_buckets(arr_vehicle_id,
+                                                   'arrival',
+                                                   arr_station)
                 if arr_reliability is not None:
                     connection['arrival']['reliability_graph'] = arr_reliability
 
                 if 'vias' in connection and len(connection['vias']['via']) > 1:
                     for via in connection['vias']['via']:
                         via_station = via['stationinfo']['@id']
-                        departure_vehicle_id = via['departure']['vehicle'].split('.')[-1]
-                        arrival_vehicle_id = via['arrival']['vehicle'].split('.')[-1]
-                        dep_reliability = self.get_buckets(
-                            departure_vehicle_id, 'departure', via_station
-                        )
+                        dep_vehicle_id = self.handle_invalid_vehicle_id(via['departure']['vehicle'].split('.')[-1])
+                        arr_vehicle_id = self.handle_invalid_vehicle_id(via['arrival']['vehicle'].split('.')[-1])
+                        dep_reliability = self.get_buckets(dep_vehicle_id,
+                                                           'departure',
+                                                           via_station)
                         if dep_reliability is not None:
                             via['departure']['reliability_graph'] = dep_reliability
 
-                        arr_reliability = self.get_buckets(
-                            arrival_vehicle_id, 'arrival', via_station
-                        )
+                        arr_reliability = self.get_buckets(arr_vehicle_id,
+                                                           'arrival',
+                                                           via_station)
                         if arr_reliability is not None:
                             via['arrival']['reliability_graph'] = arr_reliability
 
@@ -132,12 +157,12 @@ class ConnectionsHandler(RequestHandler):
                 log_message='Missing required arguments for the iRail /connections API'
             )
 
-    async def _get_routes(self, departure_station, arrival_station, time, date, timesel):
+    async def _get_routes(self, dep_station, arr_station, time, date, timesel):
         """
         Performs a request to the iRail /connections API.
         Input:
-            - departure_station
-            - arrival_station
+            - dep_station
+            - arr_station
             - datetime
             - timesel
         Output:
@@ -146,7 +171,7 @@ class ConnectionsHandler(RequestHandler):
         http_client = AsyncHTTPClient()
         try:
             response = await http_client.fetch(
-                CONNECTIONS_API_URL.format(departure_station, arrival_station, time, date, timesel)
+                CONNECTIONS_API_URL.format(dep_station, arr_station, time, date, timesel)
             )
             response = json_decode(response.body)
         except Exception as e:
