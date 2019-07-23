@@ -1,5 +1,11 @@
 # Reliability Score backend
 
+| `herokuapp deployment` | `master` | `develop` |
+| ---------------------- | -------- | --------- |
+| [![Build Status](https://heroku-badge.herokuapp.com/?app=reliability-score)] | [![Build Status](https://travis-ci.org/oSoc19/reliability-score-backend.svg?branch=master)] | [![Build Status](https://travis-ci.org/oSoc19/reliability-score-backend.svg?branch=develop)] |
+
+https://heroku-badge.herokuapp.com/?app=reliability-scor
+
 The backend is running on a Herokuapp Free Dyno at: [https://reliability-score.herokuapp.com/](https://reliability-score.herokuapp.com)
 
 :warning: *When the backend is down (free plan, after 1 hour of inactivity), you need to wait until the Dyno is ready.
@@ -13,6 +19,11 @@ By performing statistics on the data, we can help commuters to plan their future
 ## Requirements and installation
 To run the scripts and server in this repository, you need at least Python 3.6 or newer. Go to [Python.org](https://www.python.org/downloads/) to install it for your system. You also need some packages, the best way to do this is within a virtual environment. You can install `pipenv` by running `pip install pipenv` (depending on your Python installation, you may need to run this command with admin/root permissions). You can then install the required packages by running `pipenv install` in this repository and activate the virtual environment with `pipenv shell`. Now you should be able to run all the scripts in this repository.
 
+
+## Automatic deployment
+
+The source code on the `master` branch is automatically deployed to our Herokuapp server.
+Travis-CI is also used to make sure that the build doesn't break. Thanks to these tools, we can deploy our backend at all times.
 
 ## API
 
