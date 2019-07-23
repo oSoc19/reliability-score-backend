@@ -126,7 +126,7 @@ class ConnectionsHandler(RequestHandler):
                 if arr_reliability is not None:
                     connection['arrival']['reliability_graph'] = arr_reliability
 
-                if 'vias' in connection and len(connection['vias']['via']) > 1:
+                if 'vias' in connection:
                     for via in connection['vias']['via']:
                         via_station = via['stationinfo']['@id']
                         dep_vehicle_id = self.handle_invalid_vehicle_id(via['departure']['vehicle'].split('.')[-1])
