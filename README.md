@@ -2,9 +2,7 @@
 
 | `herokuapp deployment` | `master` | `develop` |
 | ---------------------- | -------- | --------- |
-| [![Build Status](https://heroku-badge.herokuapp.com/?app=reliability-score)] | [![Build Status](https://travis-ci.org/oSoc19/reliability-score-backend.svg?branch=master)] | [![Build Status](https://travis-ci.org/oSoc19/reliability-score-backend.svg?branch=develop)] |
-
-https://heroku-badge.herokuapp.com/?app=reliability-scor
+| ![Build Status](https://heroku-badge.herokuapp.com/?app=reliability-score) | ![Build Status](https://travis-ci.org/oSoc19/reliability-score-backend.svg?branch=master) | ![Build Status](https://travis-ci.org/oSoc19/reliability-score-backend.svg?branch=develop) |
 
 The backend is running on a Herokuapp Free Dyno at: [https://reliability-score.herokuapp.com/](https://reliability-score.herokuapp.com)
 
