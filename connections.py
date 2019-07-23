@@ -33,7 +33,7 @@ class ConnectionsHandler(RequestHandler):
 
         arr_delay = max(arr_graph, key=lambda k: arr_graph[k])
         dep_delay = max(dep_graph, key=lambda k: dep_graph[k])
-        return (dep_time + dep_delay) - (arr_time + arr_delay)
+        return ((dep_time + dep_delay) - (arr_time + arr_delay)) * 60
 
     def get_buckets(self, vehicle_id, data_type, station):
         bucket_list = {}
