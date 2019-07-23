@@ -37,7 +37,6 @@ class ConnectionsHandler(RequestHandler):
 
     def get_buckets(self, vehicle_id, data_type, station):
         bucket_list = {}
-        print(SPLIT_PATH.format(vehicle_id))
         if os.path.isfile(SPLIT_PATH.format(vehicle_id)):
             with open(SPLIT_PATH.format(vehicle_id)) as f:
                 data = json.load(f)
@@ -64,7 +63,6 @@ class ConnectionsHandler(RequestHandler):
             for b in bucket_list:
                 bucket_list[b] = round(100 * (bucket_list[b] / number_of_entries), PRECISION)
 
-            print(bucket_list)
 
             return bucket_list
         else:
