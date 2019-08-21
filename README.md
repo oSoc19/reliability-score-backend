@@ -17,6 +17,8 @@ By performing statistics on the data, we can help commuters to plan their future
 ## Requirements and installation
 To run the scripts and server in this repository, you need at least Python 3.6 or newer. Go to [Python.org](https://www.python.org/downloads/) to install it for your system. You also need some packages, the best way to do this is within a virtual environment. You can install `pipenv` by running `pip install pipenv` (depending on your Python installation, you may need to run this command with admin/root permissions). You can then install the required packages by running `pipenv install` in this repository and activate the virtual environment with `pipenv shell`. Now you should be able to run all the scripts in this repository.
 
+As soon as you have a virtual environment shell, you can start the server by running the following command: `./app.py`
+
 
 ## Automatic deployment
 
@@ -249,7 +251,7 @@ Besides the iRail API data (see the documentation of the iRail API for more info
 
 ## Machine Learning
 
-TODO
+See the `ml` folder.
 
 
 ## Scripts
