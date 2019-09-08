@@ -13,6 +13,7 @@ from random import randint
 CONNECTIONS_API_URL = 'http://api.irail.be/connections/?from={}&to={}&time={}&date={}&timesel={}&format=json'
 HTTP_INTERNAL_SERVER_ERROR = 500
 HTTP_BAD_REQUEST = 400
+HTTP_OK = 200
 SECONDS_TO_MINUTES_DIV = 60
 MAX_BUCKET = 15
 NEGATIVE_DELAY = 0
@@ -99,8 +100,11 @@ class ConnectionsHandler(RequestHandler):
             )
 
         # Perform iRail API query
-        response = await self._get_routes(dep_station, arr_station, time, date, timesel)
-        if 'connection' in response:
+        response, status_code = await self._get_routes(dep_station, arr_station, time, date, timesel)
+        print(response)
+        print(status_code)
+
+        if status_code == HTTP_OK and 'connection' in response:
             # Add reliability data to response
             # NOTE: delay info is an integer, rest of iRail API uses strings
             for connection in response['connection']:
@@ -151,7 +155,8 @@ class ConnectionsHandler(RequestHandler):
             self.write(response)
         else:
             raise HTTPError(
-                status_code=HTTP_INTERNAL_SERVER_ERROR,
+                status_code=status_code,
+                reason=str(response),
                 log_message='Missing required arguments for the iRail /connections API'
             )
 
@@ -167,16 +172,21 @@ class ConnectionsHandler(RequestHandler):
             - JSON response as a Python dict
         """
         http_client = AsyncHTTPClient()
+        status_code = HTTP_INTERNAL_SERVER_ERROR
         try:
             response = await http_client.fetch(
                 CONNECTIONS_API_URL.format(dep_station, arr_station, time, date, timesel)
             )
+            status_code = response.code
             response = json_decode(response.body)
         except Exception as e:
             print('Error: %s' % e)
-            return None
-        else:
-            return response
+            status_code = e.code
+            response = json_decode(e.response.body)
 
         # Free resources again
         http_client.close()
+
+        # Return response
+        return response, status_code
+
