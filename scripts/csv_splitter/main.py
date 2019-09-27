@@ -170,6 +170,6 @@ class Main:
 
 if __name__ == "__main__":
     m = Main()
-    #m.split_data()
+    m.split_data()
     m.execute_statistics()
 
