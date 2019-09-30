@@ -1,12 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import csv
 import json
 import os
 import sys
 import statistics
 from datetime import datetime
-STATION_URIS_FILE = "data/station_to_uri.json"
-DATA_SET_FILE = "data/full.csv"
+STATION_URIS_FILE = "../station_uris/station_to_uri.json"
+DATA_SET_FILE = "../spreadsheets/complete.csv"
 DATETIME_PARSING_STRING = "%Y-%m-%d %H:%M:%S"
 DATE_PARSING_STRING = "%Y-%m-%d"
 DIRECTORY_STRING = "results/{}"
