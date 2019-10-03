@@ -1,8 +1,19 @@
+#!/usr/bin/python3
+
 import csv
 import requests
 import re
+import os
+import errno
 
+# Create downloads folder if needed
+try:
+    os.makedirs('downloads')
+except OSError as e:
+    if e.errno != errno.EEXIST:
+        raise
 
+# Download Excel file one-by-one
 with open('list_spreadsheets.csv', 'r', newline='') as f:
 	reader = csv.reader(f, delimiter=';')
 	urls = []
