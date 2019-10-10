@@ -1,0 +1,24 @@
+{
+    "http://irail.be/stations/NMBS/008845005": {
+        "departure": {
+            "median": 5,
+            "mean": 17.333333333333332,
+            "variance": 2276.3333333333335,
+            "min": -23,
+            "max": 70,
+            "raw": [
+                5,
+                70,
+                -23
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": []
+        }
+    }
+}

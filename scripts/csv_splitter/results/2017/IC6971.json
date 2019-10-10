@@ -1,0 +1,98 @@
+{
+    "http://irail.be/stations/NMBS/008811726": {
+        "departure": {
+            "median": 30,
+            "mean": 24,
+            "variance": 223,
+            "min": 7,
+            "max": 35,
+            "raw": [
+                35,
+                30,
+                7
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": []
+        }
+    },
+    "http://irail.be/stations/NMBS/008811718": {
+        "departure": {
+            "median": 30,
+            "mean": 40.666666666666664,
+            "variance": 2486.3333333333335,
+            "min": -3,
+            "max": 95,
+            "raw": [
+                95,
+                30,
+                -3
+            ]
+        },
+        "arrival": {
+            "median": 30,
+            "mean": 24,
+            "variance": 223,
+            "min": 7,
+            "max": 35,
+            "raw": [
+                35,
+                30,
+                7
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008811635": {
+        "departure": {
+            "median": 30,
+            "mean": 40.666666666666664,
+            "variance": 2486.3333333333335,
+            "min": -3,
+            "max": 95,
+            "raw": [
+                95,
+                30,
+                -3
+            ]
+        },
+        "arrival": {
+            "median": 30,
+            "mean": 40.666666666666664,
+            "variance": 2486.3333333333335,
+            "min": -3,
+            "max": 95,
+            "raw": [
+                95,
+                30,
+                -3
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008811601": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": []
+        },
+        "arrival": {
+            "median": 79,
+            "mean": 100,
+            "variance": 3193,
+            "min": 57,
+            "max": 164,
+            "raw": [
+                164,
+                79,
+                57
+            ]
+        }
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "http://irail.be/stations/NMBS/008866001": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": []
+        },
+        "arrival": {
+            "median": 51.5,
+            "mean": 110.8,
+            "variance": 32817.73333333333,
+            "min": -71,
+            "max": 505,
+            "raw": [
+                505,
+                27,
+                -71,
+                66,
+                -26,
+                37,
+                103,
+                276,
+                247,
+                -56
+            ]
+        }
+    }
+}

@@ -1,0 +1,96 @@
+{
+    "http://irail.be/stations/NMBS/008841004": {
+        "departure": {
+            "median": 63,
+            "mean": 174.66666666666666,
+            "variance": 67743.0,
+            "min": 21,
+            "max": 783,
+            "raw": [
+                75,
+                52,
+                425,
+                21,
+                89,
+                39,
+                63,
+                25,
+                783
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": []
+        }
+    },
+    "http://irail.be/stations/NMBS/008843901": {
+        "departure": {
+            "median": 99,
+            "mean": 346.6666666666667,
+            "variance": 147367.0,
+            "min": 71,
+            "max": 1040,
+            "raw": [
+                99,
+                90,
+                697,
+                1040,
+                88,
+                71,
+                82,
+                159,
+                794
+            ]
+        },
+        "arrival": {
+            "median": 247,
+            "mean": 407,
+            "variance": 145099.75,
+            "min": 68,
+            "max": 1040,
+            "raw": [
+                76,
+                247,
+                854,
+                1040,
+                267,
+                230,
+                82,
+                68,
+                799
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008846201": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": []
+        },
+        "arrival": {
+            "median": 223,
+            "mean": 306.1111111111111,
+            "variance": 91561.11111111111,
+            "min": 29,
+            "max": 850,
+            "raw": [
+                96,
+                243,
+                850,
+                98,
+                263,
+                223,
+                29,
+                159,
+                794
+            ]
+        }
+    }
+}
