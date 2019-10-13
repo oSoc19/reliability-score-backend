@@ -1,0 +1,23 @@
+{
+    "http://irail.be/stations/NMBS/008821105": {
+        "departure": {
+            "median": 707.5,
+            "mean": 707.5,
+            "variance": 456012.5,
+            "min": 230,
+            "max": 1185,
+            "raw": [
+                230,
+                1185
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": []
+        }
+    }
+}
