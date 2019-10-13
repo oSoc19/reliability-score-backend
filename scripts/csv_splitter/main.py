@@ -33,12 +33,37 @@ class Main:
 
                 # Handle vehicle type
                 vehicle_type = None
-                if "IC" in relation or "L" in relation:
-                    # Replace / in vehicle type, this happens sometimes in the
-                    # data
-                    vehicle_type = relation.split()[0].replace("/", "")
+                if "ICE" in relation:
+                    vehicle_type = "ICE"
+                elif "THAL" in relation:
+                    vehicle_type = "THA"
+                elif "TGV" in relation:
+                    vehicle_type = "TGV"
+                elif "IC/L" in relation:
+                    vehicle_type = "IC_L"
+                elif "EURST" in relation:
+                    vehcile_type = "EUR"
+                elif "LR_HKV" in relation:
+                    vehicle_type = "LR_HKV"
+                elif "LR_HST" in relation:
+                    vehicle_type = "LR_HST"
+                elif "CHARTER" in relation:
+                    vehicle_type = "CHARTER"
+                elif "IZY" in relation:
+                    vehicle_type = "IZY"
+                elif "INT" in relation:
+                    vehicle_type = "INT"
+                elif "ICT" in relation:
+                    vehicle_type = "IC"
+                elif "IC" in relation:
+                    vehicle_type = "IC"
+                elif "L" in relation:
+                    vehicle_type = "L"
                 elif "S" in relation:
+                    # Make sure we have S1/S5/S6/... instead of S only
                     vehicle_type = relation.split("-")[0]
+                elif "P" in relation:
+                    vehicle_type = "P"
                 else:
                     # Skip all other trains
                     continue
