@@ -7,9 +7,9 @@
             "min": 25,
             "max": 4694,
             "raw": [
-                25,
                 464,
-                4694
+                4694,
+                25
             ]
         },
         "arrival": {
@@ -19,35 +19,12 @@
             "min": -257,
             "max": 4627,
             "raw": [
-                848,
-                4627,
-                145,
                 700,
+                145,
+                2939,
                 -257,
-                2939
-            ]
-        }
-    },
-    "http://irail.be/stations/NMBS/008845005": {
-        "departure": {
-            "median": 13.0,
-            "mean": 13,
-            "variance": 66248,
-            "min": -169,
-            "max": 195,
-            "raw": [
-                -169,
-                195
-            ]
-        },
-        "arrival": {
-            "median": 0.0,
-            "mean": 0.0,
-            "variance": 0.0,
-            "min": 0.0,
-            "max": 0.0,
-            "raw": [
-                0
+                848,
+                4627
             ]
         }
     },
@@ -928,6 +905,29 @@
             "max": 0.0,
             "raw": [
                 -945
+            ]
+        }
+    },
+    "http://irail.be/stations/NMBS/008845005": {
+        "departure": {
+            "median": 13.0,
+            "mean": 13,
+            "variance": 66248,
+            "min": -169,
+            "max": 195,
+            "raw": [
+                195,
+                -169
+            ]
+        },
+        "arrival": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                0
             ]
         }
     },

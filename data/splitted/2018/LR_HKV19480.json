@@ -1055,6 +1055,29 @@
             ]
         }
     },
+    "http://irail.be/stations/NMBS/008866001": {
+        "departure": {
+            "median": 0.0,
+            "mean": 0.0,
+            "variance": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "raw": [
+                5692
+            ]
+        },
+        "arrival": {
+            "median": 2729.5,
+            "mean": 2729.5,
+            "variance": 13173844.5,
+            "min": 163,
+            "max": 5296,
+            "raw": [
+                163,
+                5296
+            ]
+        }
+    },
     "http://irail.be/stations/NMBS/008866605": {
         "departure": {
             "median": 0.0,
@@ -1093,29 +1116,6 @@
             "max": 0.0,
             "raw": [
                 0
-            ]
-        }
-    },
-    "http://irail.be/stations/NMBS/008866001": {
-        "departure": {
-            "median": 0.0,
-            "mean": 0.0,
-            "variance": 0.0,
-            "min": 0.0,
-            "max": 0.0,
-            "raw": [
-                5692
-            ]
-        },
-        "arrival": {
-            "median": 2729.5,
-            "mean": 2729.5,
-            "variance": 13173844.5,
-            "min": 163,
-            "max": 5296,
-            "raw": [
-                5296,
-                163
             ]
         }
     }
