@@ -7,6 +7,7 @@ from datetime import datetime
 import time as tm
 import json
 import re
+import glob
 import os.path
 from random import randint
 
@@ -17,7 +18,7 @@ HTTP_OK = 200
 SECONDS_TO_MINUTES_DIV = 60
 MAX_BUCKET = 15
 NEGATIVE_DELAY = 0
-SPLIT_PATH = 'data/splitted/2019/{}.json'
+SPLIT_PATH = 'data/splitted/2019/*{}.json'
 PRECISION = 1
 # demo: http://localhost:3000/connections?from=Vilvoorde&to=Brugge&time=1138&date=080719&timesel=departure
 
@@ -34,12 +35,13 @@ class ConnectionsHandler(RequestHandler):
 
         arr_delay = max(arr_graph, key=lambda k: arr_graph[k])
         dep_delay = max(dep_graph, key=lambda k: dep_graph[k])
-        return ((dep_time + dep_delay) - (arr_time + arr_delay)) * 60
+        return ((dep_time + dep_delay * 60) - (arr_time + arr_delay * 60))
 
     def get_buckets(self, vehicle_id, data_type, station):
         bucket_list = {}
-        if os.path.isfile(SPLIT_PATH.format(vehicle_id)):
-            with open(SPLIT_PATH.format(vehicle_id)) as f:
+        matching_files = glob.glob(SPLIT_PATH.format(vehicle_id[-4:])) # Ignore P/S1/...
+        if matching_files:
+            with open(matching_files[0]) as f:
                 data = json.load(f)
 
                 # In case the station isn't available for the vehicle, return None
@@ -61,8 +63,9 @@ class ConnectionsHandler(RequestHandler):
 
             # Convert to percentages
             number_of_entries = sum(bucket_list.values())
-            for b in bucket_list:
-                bucket_list[b] = round(100 * (bucket_list[b] / number_of_entries), PRECISION)
+            if number_of_entries:
+                for b in bucket_list:
+                    bucket_list[b] = round(100 * (bucket_list[b] / number_of_entries), PRECISION)
 
 
             return bucket_list
@@ -101,8 +104,6 @@ class ConnectionsHandler(RequestHandler):
 
         # Perform iRail API query
         response, status_code = await self._get_routes(dep_station, arr_station, time, date, timesel)
-        print(response)
-        print(status_code)
 
         if status_code == HTTP_OK and 'connection' in response:
             # Add reliability data to response
@@ -110,9 +111,9 @@ class ConnectionsHandler(RequestHandler):
             for connection in response['connection']:
                 arr_station = connection['arrival']['stationinfo']['@id']
                 dep_station = connection['departure']['stationinfo']['@id']
-                dep_vehicle_id = self.handle_invalid_vehicle_id(connection['departure']['vehicle'].split('.')[-1])
-                arr_vehicle_id = self.handle_invalid_vehicle_id(connection['arrival']['vehicle'].split('.')[-1])
-
+                dep_vehicle_id = re.findall(r'\d+', connection['departure']['vehicle'])[0]  #self.handle_invalid_vehicle_id(connection['departure']['vehicle'].split('.')[-1])
+                arr_vehicle_id = re.findall(r'\d+', connection['arrival']['vehicle'])[0] #self.handle_invalid_vehicle_id(connection['arrival']['vehicle'].split('.')[-1])
+                print(dep_vehicle_id, arr_vehicle_id)
 
                 dep_reliability = self.get_buckets(dep_vehicle_id,
                                                    'departure',
@@ -120,6 +121,7 @@ class ConnectionsHandler(RequestHandler):
 
                 if dep_reliability is not None:
                     connection['departure']['reliability_graph'] = dep_reliability
+                    print(dep_reliability)
 
                 if arr_vehicle_id[0] == 'S' and arr_vehicle_id[1].isdigit():
                     arr_vehicle_id = 'L' + arr_vehicle_id[2:]
@@ -129,23 +131,27 @@ class ConnectionsHandler(RequestHandler):
                                                    arr_station)
                 if arr_reliability is not None:
                     connection['arrival']['reliability_graph'] = arr_reliability
+                    print(arr_reliability)
 
                 if 'vias' in connection:
                     for via in connection['vias']['via']:
                         via_station = via['stationinfo']['@id']
-                        dep_vehicle_id = self.handle_invalid_vehicle_id(via['departure']['vehicle'].split('.')[-1])
-                        arr_vehicle_id = self.handle_invalid_vehicle_id(via['arrival']['vehicle'].split('.')[-1])
+                        dep_vehicle_id = re.findall(r'\d+', via['departure']['vehicle'])[0]  #self.handle_invalid_vehicle_id(connection['departure']['vehicle'].split('.')[-1])
+                        arr_vehicle_id = re.findall(r'\d+', via['arrival']['vehicle'])[0] #self.handle_invalid_vehicle_id(connection['arrival']['vehicle'].split('.')[-1])
+                        print("\t{} {}".format(arr_vehicle_id, dep_vehicle_id))
                         dep_reliability = self.get_buckets(dep_vehicle_id,
                                                            'departure',
                                                            via_station)
                         if dep_reliability is not None:
                             via['departure']['reliability_graph'] = dep_reliability
+                            print("\t{}".format(dep_reliability))
 
                         arr_reliability = self.get_buckets(arr_vehicle_id,
                                                            'arrival',
                                                            via_station)
                         if arr_reliability is not None:
                             via['arrival']['reliability_graph'] = arr_reliability
+                            print("\t{}".format(arr_reliability))
 
                         if arr_reliability is not None and dep_reliability is not None:
                             transfer_time = self.get_transfer_time(via['arrival'], via['departure'])
