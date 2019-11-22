@@ -138,20 +138,20 @@ class ConnectionsHandler(RequestHandler):
                         via_station = via['stationinfo']['@id']
                         dep_vehicle_id = re.findall(r'\d+', via['departure']['vehicle'])[0]  #self.handle_invalid_vehicle_id(connection['departure']['vehicle'].split('.')[-1])
                         arr_vehicle_id = re.findall(r'\d+', via['arrival']['vehicle'])[0] #self.handle_invalid_vehicle_id(connection['arrival']['vehicle'].split('.')[-1])
-                        print("\t{} {}".format(arr_vehicle_id, dep_vehicle_id))
+                        print(f'\t{arr_vehicle_id} {dep_vehicle_id}')
                         dep_reliability = self.get_buckets(dep_vehicle_id,
                                                            'departure',
                                                            via_station)
                         if dep_reliability is not None:
                             via['departure']['reliability_graph'] = dep_reliability
-                            print("\t{}".format(dep_reliability))
+                            print(f'\t{dep_reliability}')
 
                         arr_reliability = self.get_buckets(arr_vehicle_id,
                                                            'arrival',
                                                            via_station)
                         if arr_reliability is not None:
                             via['arrival']['reliability_graph'] = arr_reliability
-                            print("\t{}".format(arr_reliability))
+                            print(f'\t{arr_reliability}')
 
                         if arr_reliability is not None and dep_reliability is not None:
                             transfer_time = self.get_transfer_time(via['arrival'], via['departure'])
